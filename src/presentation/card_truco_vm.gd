@@ -5,9 +5,9 @@ class_name CardTrucoVM
 var card_material: Material = null
 var is_focused: bool = false
 
-func _ready():
+func _ready() -> void:
 	if get_parent() is Card:
-		var card = get_parent() as Card
+		var card: Card = get_parent()
 		card.drag_started.connect(_on_drag_started)
 		card.drag_ended.connect(_on_drag_ended)
 		card.card_hovered.connect(_on_card_hovered)
@@ -15,6 +15,7 @@ func _ready():
 		
 
 func _on_drag_started(_card: Card) -> void:
+	print("drag started")
 	if is_focused: return
 	is_focused = true
 
@@ -32,12 +33,14 @@ func _on_card_unhovered() -> void:
 
 
 func _update_display() -> void:
-	var data = card_resource as CardData
+	var data: CardData = card_resource
 	
 	if data:
-		$SubViewport/PanelContainer/Texture.texture = data.card_image
-		card_material = $SubViewport/PanelContainer/Texture.material
-		
+		var texture: Texture2D = data.card_image
+		var node_texture: TextureRect = $SubViewport/PanelContainer/Texture
+		card_material = node_texture.material
+		node_texture.texture = texture
+
 
 func _process(_delta):
 	if is_focused:

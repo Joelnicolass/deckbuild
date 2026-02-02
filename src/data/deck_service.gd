@@ -31,16 +31,16 @@ func create_deck_data() -> Dictionary:
 	return deck_data
 
 
-func get_random_cards(count: int, deck_data: Dictionary) -> Array[CardData]:
-	var cards: Array[CardData] = []
-
+func get_random_card(deck_data: Dictionary) -> CardData:
 	var suit: CardData.CardSuit = CardData.CardSuit.values().pick_random()
 	var cards_in_suit: Array = deck_data.get(suit, [])
-	
 	cards_in_suit.shuffle()
+	return cards_in_suit.pop_front()
 
-	for card: CardData in cards_in_suit:
+
+func get_random_cards(count: int, deck_data: Dictionary) -> Array[CardData]:
+	var cards: Array[CardData] = []
+	for i: int in count:
+		var card: CardData = get_random_card(deck_data)
 		cards.append(card)
-		if cards.size() >= count:
-			break
 	return cards
