@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://bvg56fo05utbw"]
+
+[ext_resource type="Script" uid="uid://xjok6luc7rkv" path="res://src/domain/card_data.gd" id="1_84815"]
+[ext_resource type="Texture2D" uid="uid://b4m2w2qo7hes1" path="res://src/assets/pixelDeck/Oro/oro7.png" id="1_hm0vk"]
+
+[resource]
+script = ExtResource("1_84815")
+card_suit = 2
+card_value = 6
+card_image = ExtResource("1_hm0vk")
+metadata/_custom_type_script = "uid://xjok6luc7rkv"

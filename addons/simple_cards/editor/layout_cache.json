@@ -1,0 +1,30 @@
+{
+	"res://addons/simple_cards/card/card_layout/default_card_back_layout.tscn": {
+		"enabled": true,
+		"last_modified": 0.0,
+		"layout_id": "default_back",
+		"tags": []
+	},
+	"res://addons/simple_cards/card/card_layout/default_card_layout.tscn": {
+		"enabled": true,
+		"last_modified": 0.0,
+		"layout_id": "default",
+		"tags": []
+	},
+	"res://src/card_creature.tscn": {
+		"enabled": true,
+		"last_modified": 1769981034,
+		"layout_id": "card_creature",
+		"tags": [
+			"card_creature"
+		]
+	},
+	"res://src/card_truco.tscn": {
+		"enabled": true,
+		"last_modified": 1769993037,
+		"layout_id": "card_truco",
+		"tags": [
+			"card_truco"
+		]
+	}
+}

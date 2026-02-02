@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://b6em7iqkdahnx"]
+
+[ext_resource type="Texture2D" uid="uid://cpw0nnx14qves" path="res://src/assets/pixelDeck/Basto/basto6.png" id="1_t3270"]
+[ext_resource type="Script" uid="uid://xjok6luc7rkv" path="res://src/domain/card_data.gd" id="2_3e742"]
+
+[resource]
+script = ExtResource("2_3e742")
+card_suit = 1
+card_value = 5
+card_image = ExtResource("1_t3270")
+metadata/_custom_type_script = "uid://xjok6luc7rkv"

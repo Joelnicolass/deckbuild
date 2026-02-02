@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://dskmww15lb13o"]
+
+[ext_resource type="Texture2D" uid="uid://ieqwk57amm1f" path="res://src/assets/pixelDeck/Copa/copa8.png" id="1_fcd3r"]
+[ext_resource type="Script" uid="uid://xjok6luc7rkv" path="res://src/domain/card_data.gd" id="2_ibtv8"]
+
+[resource]
+script = ExtResource("2_ibtv8")
+card_suit = 3
+card_value = 7
+card_image = ExtResource("1_fcd3r")
+metadata/_custom_type_script = "uid://xjok6luc7rkv"

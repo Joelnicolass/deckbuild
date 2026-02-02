@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://doy5oi8ylopr2"]
+
+[ext_resource type="Texture2D" uid="uid://dpytvew6b0fwh" path="res://src/assets/pixelDeck/Espada/espada5.png" id="1_qm4nw"]
+[ext_resource type="Script" uid="uid://xjok6luc7rkv" path="res://src/domain/card_data.gd" id="2_mw7dr"]
+
+[resource]
+script = ExtResource("2_mw7dr")
+card_value = 4
+card_image = ExtResource("1_qm4nw")
+metadata/_custom_type_script = "uid://xjok6luc7rkv"
