@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://b8rmhan1hx2kp"]
 
-[ext_resource type="Script" uid="uid://bks4kxc0r1q3n" path="res://src/presentation/card_layout.gd" id="1_s82k1"]
+[ext_resource type="Script" uid="uid://bks4kxc0r1q3n" path="res://src/presentation/view_models/card_layout.gd" id="1_s82k1"]
 [ext_resource type="SpriteFrames" uid="uid://c0wba28tjp2b3" path="res://src/common/animations/card_creature_sprites.tres" id="2_5cofm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cofm"]

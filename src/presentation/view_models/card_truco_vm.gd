@@ -45,7 +45,7 @@ func _update_display() -> void:
 func _process(_delta):
 	if is_focused:
 		card_material.set_shader_parameter("mouse_position", get_global_mouse_position())
-		card_material.set_shader_parameter("sprite_position", global_position)
+		card_material.set_shader_parameter("sprite_position", global_position + size / 2)
 	else:
 		card_material.set_shader_parameter("mouse_position", Vector2.ZERO)
 		card_material.set_shader_parameter("sprite_position", Vector2.ZERO)

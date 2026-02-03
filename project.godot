@@ -19,6 +19,9 @@ config/icon="res://icon.svg"
 
 CG="*res://addons/simple_cards/card_global.gd"
 DeckService="*res://src/data/deck_service.gd"
+IntlService="*res://src/data/intl_service.gd"
+Enums="*res://src/domain/enums.gd"
+GameService="*res://src/data/game_service.gd"
 
 [debug]
 

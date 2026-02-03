@@ -1,13 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://lvu26w7cu1pg"]
+[gd_scene load_steps=5 format=3 uid="uid://lvu26w7cu1pg"]
 
 [ext_resource type="Script" uid="uid://q480wihmrpi5" path="res://src/main.gd" id="1_eewff"]
+[ext_resource type="Shader" uid="uid://ixvefdt6ek0a" path="res://src/common/shaders/bg_distortion.gdshader" id="2_3cfgd"]
 [ext_resource type="Script" uid="uid://bbi8i6vef3f6y" path="res://addons/simple_cards/hand/card_hand.gd" id="2_5q4o7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fyndt"]
+shader = ExtResource("2_3cfgd")
+shader_parameter/colorA = Color(0, 0, 0.5372549, 1)
+shader_parameter/colorB = Color(0.9019608, 0.14117648, 0.7058824, 1)
+shader_parameter/colorC = Color(0.61831224, 0.36073592, 0.55916995, 1)
+shader_parameter/discomode = false
+shader_parameter/speed = 0.20000000624012
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_eewff")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 358)
+
+[node name="PostProcess" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="PostProcess"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="PostProcess/Control"]
+material = SubResource("ShaderMaterial_fyndt")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -50,3 +78,28 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_5q4o7")
 metadata/_custom_type_script = "uid://bbi8i6vef3f6y"
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer2"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/Control"]
+layout_mode = 0
+offset_right = 126.0
+offset_bottom = 40.0
+scale = Vector2(1, 1.0042542)
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Label" type="Label" parent="CanvasLayer2/Control/MarginContainer"]
+layout_mode = 2
+text = "asdasasdasdasd"

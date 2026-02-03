@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cqxfd4rq1hrr6"]
 
-[ext_resource type="Script" uid="uid://bv0gfhvgq8ift" path="res://src/presentation/card_truco_vm.gd" id="1_3fio4"]
+[ext_resource type="Script" uid="uid://bv0gfhvgq8ift" path="res://src/presentation/view_models/card_truco_vm.gd" id="1_3fio4"]
 [ext_resource type="Shader" uid="uid://bpbay41ftasgx" path="res://src/common/shaders/card_effects.gdshader" id="2_cqujy"]
 [ext_resource type="Texture2D" uid="uid://cx8x6urhywv3d" path="res://src/assets/pixelDeck/Basto/basto3.png" id="3_atd8j"]
 
