@@ -1,72 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://cqxfd4rq1hrr6"]
+[gd_scene load_steps=7 format=3 uid="uid://cqxfd4rq1hrr6"]
 
 [ext_resource type="Script" uid="uid://bv0gfhvgq8ift" path="res://src/presentation/view_models/card_truco_vm.gd" id="1_3fio4"]
-[ext_resource type="Shader" uid="uid://bpbay41ftasgx" path="res://src/common/shaders/card_effects.gdshader" id="2_cqujy"]
+[ext_resource type="Material" uid="uid://b44o6cpajf012" path="res://src/common/materials/card_truco_effects.tres" id="2_atd8j"]
 [ext_resource type="Texture2D" uid="uid://cx8x6urhywv3d" path="res://src/assets/pixelDeck/Basto/basto3.png" id="3_atd8j"]
+[ext_resource type="Texture2D" uid="uid://b4undxcs4cg0s" path="res://src/assets/pixelDeck/Additions/cardBack.png" id="4_atd8j"]
+[ext_resource type="Material" uid="uid://im6t1fmssiov" path="res://src/common/materials/card_truco_effects_back.tres" id="4_lb5y4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3fio4"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_lb5y4"]
-frequency = 0.0001
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n4d4s"]
-noise = SubResource("FastNoiseLite_lb5y4")
-seamless_blend_skirt = 1.0
-
-[sub_resource type="Gradient" id="Gradient_cqujy"]
-offsets = PackedFloat32Array(0, 0.31333333, 0.6766667, 0.99666667)
-colors = PackedColorArray(0.8862745, 0.48235294, 0, 1, 0.12156863, 0.5019608, 1, 1, 1, 0, 0.05882353, 1, 1, 0.5803922, 0.49019608, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_atd8j"]
-gradient = SubResource("Gradient_cqujy")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_puy36"]
-resource_local_to_scene = true
-shader = ExtResource("2_cqujy")
-shader_parameter/mouse_position = Vector2(80, 0)
-shader_parameter/sprite_position = Vector2(0, 0)
-shader_parameter/fov = 90.0
-shader_parameter/cull_back = true
-shader_parameter/inset = 0.0
-shader_parameter/max_tilt = 0.150000007125
-shader_parameter/max_distance = 500.0
-shader_parameter/foilcolor = Color(0, 0, 0, 1)
-shader_parameter/threshold = 1.0000000149012
-shader_parameter/fuzziness = 0.999999977648
-shader_parameter/period = 0.1
-shader_parameter/scroll = 1.0
-shader_parameter/normal_strength = 1.0
-shader_parameter/effect_alpha_mult = 0.6350000301625
-shader_parameter/direction = 0.5
-shader_parameter/foil_mask = SubResource("NoiseTexture2D_n4d4s")
-shader_parameter/gradient = SubResource("GradientTexture1D_atd8j")
-shader_parameter/enable_dissolve = false
-shader_parameter/dissolve_position = Vector2(1, 0)
-shader_parameter/dissolve_radius = 0.2
-shader_parameter/dissolve_borderWidth = 0.02
-shader_parameter/dissolve_burnMult = 0.135
-shader_parameter/dissolve_burnColor = Color(0, 0, 0, 1)
-shader_parameter/enable_fill = false
-shader_parameter/fill_progress = 0.5
-shader_parameter/fill_overlay_color = Color(0.2, 1, 0.2, 0.5)
-shader_parameter/fill_dir = Vector2(1, 0)
-shader_parameter/fill_alpha_cutoff = 0.01
-shader_parameter/enable_highlight = false
-shader_parameter/highlight_Line_Smoothness = 0.045
-shader_parameter/highlight_Line_Width = 0.09
-shader_parameter/highlight_Brightness = 3.0
-shader_parameter/highlight_Rotation_deg = 30.0
-shader_parameter/highlight_Distortion = 1.8
-shader_parameter/highlight_Speed = 0.7
-shader_parameter/highlight_Position = 0.0
-shader_parameter/highlight_Position_Min = 0.25
-shader_parameter/highlight_Position_Max = 0.5
-shader_parameter/highlight_Alpha = 1.0
-shader_parameter/enable_collapse = false
-shader_parameter/collapse_burst_progress = 0.0
-shader_parameter/collapse_spread_strength = 1.0
-shader_parameter/collapse_distortion_strength = 0.05
-shader_parameter/collapse_fade_start = 0.7
 
 [node name="CardLayout" type="SubViewportContainer"]
 offset_right = 80.0
@@ -91,8 +31,14 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3fio4")
 
-[node name="Texture" type="TextureRect" parent="SubViewport/PanelContainer"]
+[node name="Front" type="TextureRect" parent="SubViewport/PanelContainer"]
 texture_filter = 1
-material = SubResource("ShaderMaterial_puy36")
+material = ExtResource("2_atd8j")
 layout_mode = 2
 texture = ExtResource("3_atd8j")
+
+[node name="Back" type="TextureRect" parent="SubViewport/PanelContainer"]
+texture_filter = 1
+material = ExtResource("4_lb5y4")
+layout_mode = 2
+texture = ExtResource("4_atd8j")

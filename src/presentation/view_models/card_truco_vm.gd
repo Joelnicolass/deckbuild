@@ -2,19 +2,23 @@
 extends CardLayout
 class_name CardTrucoVM
 
-# --- Shader Material ---
-var card_material: ShaderMaterial = null
+# --- Properties --- #
+@export var is_flipped: bool = false
 
-# --- Card Effects ---
-var is_hovered: bool = false
+# --- Shader Material --- #
+var card_material_front: ShaderMaterial = null
+var card_material_back: ShaderMaterial = null
+
+# --- Card Effects --- #
+@export var is_hovered: bool = false
 
 @export var burn_velocity: float = 0.1
-var is_burning: bool = false
-var burn_radius: float = 0.0
+@export var is_burning: bool = false
+@export var burn_radius: float = 0.0
 
-var is_marked: bool = false
-var mark_radius: float = 0.2
-var mark_position: Vector2 = Vector2(0, 0)
+@export var is_marked: bool = false
+@export var mark_radius: float = 0.2
+@export var mark_position: Vector2 = Vector2(0, 0)
 
 
 func create_noise_texture() -> Texture2D:
@@ -40,7 +44,11 @@ func _ready() -> void:
 		card.card_hovered.connect(_on_card_hovered)
 		card.card_unhovered.connect(_on_card_unhovered)
 
+	if is_flipped: hide_card()
+	else: show_card()
+	_animation_on_hand()
 
+	
 func _process(delta: float) -> void:
 	_update_hover_effect()
 	_update_burn_effect(delta)
@@ -72,9 +80,12 @@ func _update_display() -> void:
 	
 	if data:
 		var texture: Texture2D = data.card_image
-		var node_texture: TextureRect = $SubViewport/PanelContainer/Texture
-		card_material = node_texture.material
+		var node_texture: TextureRect = $SubViewport/PanelContainer/Front
+		card_material_front = node_texture.material
 		node_texture.texture = texture
+
+		var node_texture_back: TextureRect = $SubViewport/PanelContainer/Back
+		card_material_back = node_texture_back.material
 
 		_setup_burn_effect()
 
@@ -82,38 +93,77 @@ func _update_display() -> void:
 # --- Private Utils --- #
 
 func _setup_burn_effect() -> void:
-	if not card_material: return
-	card_material.set_shader_parameter('dissolve_noiseTexture', create_noise_texture())
-	card_material.set_shader_parameter('dissolve_position', Vector2(randf(), randf()))
+	if not card_material_front: return
+	card_material_front.set_shader_parameter('dissolve_noiseTexture', create_noise_texture())
+	card_material_front.set_shader_parameter('dissolve_position', Vector2(randf(), randf()))
+
+	card_material_back.set_shader_parameter('dissolve_noiseTexture', create_noise_texture())
+	card_material_back.set_shader_parameter('dissolve_position', Vector2(randf(), randf()))
 
 
 func _update_burn_effect(delta: float) -> void:
 	if not is_burning: return
-	card_material.set_shader_parameter('enable_dissolve', true)
-	card_material.set_shader_parameter('dissolve_radius', burn_radius)
+	card_material_front.set_shader_parameter('enable_dissolve', true)
+	card_material_front.set_shader_parameter('dissolve_radius', burn_radius)
+
+	card_material_back.set_shader_parameter('enable_dissolve', true)
+	card_material_back.set_shader_parameter('dissolve_radius', burn_radius)
 	burn_radius += delta * burn_velocity
 
 
 func _update_hover_effect() -> void:
 	if is_hovered:
-		card_material.set_shader_parameter("mouse_position", get_global_mouse_position())
-		card_material.set_shader_parameter("sprite_position", global_position + size / 2)
+		card_material_front.set_shader_parameter("mouse_position", get_global_mouse_position())
+		card_material_front.set_shader_parameter("sprite_position", global_position + size / 2)
+
+		card_material_back.set_shader_parameter("mouse_position", get_global_mouse_position())
+		card_material_back.set_shader_parameter("sprite_position", global_position + size / 2)
 	else:
-		card_material.set_shader_parameter("mouse_position", Vector2.ZERO)
-		card_material.set_shader_parameter("sprite_position", Vector2.ZERO)
+		card_material_front.set_shader_parameter("mouse_position", Vector2.ZERO)
+		card_material_front.set_shader_parameter("sprite_position", Vector2.ZERO)
+
+		card_material_back.set_shader_parameter("mouse_position", Vector2.ZERO)
+		card_material_back.set_shader_parameter("sprite_position", Vector2.ZERO)
 
 
 func _update_mark_effect() -> void:
 	if is_marked:
-		card_material.set_shader_parameter('enable_dissolve', true)
-		card_material.set_shader_parameter('dissolve_radius', mark_radius)
-		card_material.set_shader_parameter('dissolve_position', mark_position)
+		card_material_front.set_shader_parameter('enable_dissolve', true)
+		card_material_front.set_shader_parameter('dissolve_radius', mark_radius)
+		card_material_front.set_shader_parameter('dissolve_position', mark_position)
+
+		card_material_back.set_shader_parameter('enable_dissolve', true)
+		card_material_back.set_shader_parameter('dissolve_radius', mark_radius)
+		card_material_back.set_shader_parameter('dissolve_position', mark_position)
 	else:
-		card_material.set_shader_parameter('enable_dissolve', false)
-		card_material.set_shader_parameter('dissolve_radius', 0)
-		card_material.set_shader_parameter('dissolve_position', Vector2.ZERO)
+		card_material_front.set_shader_parameter('enable_dissolve', false)
+		card_material_front.set_shader_parameter('dissolve_radius', 0)
+		card_material_front.set_shader_parameter('dissolve_position', Vector2.ZERO)
+
+		card_material_back.set_shader_parameter('enable_dissolve', false)
+		card_material_back.set_shader_parameter('dissolve_radius', 0)
+		card_material_back.set_shader_parameter('dissolve_position', Vector2.ZERO)
 
 
+func hide_card() -> void:
+	($SubViewport/PanelContainer/Front as TextureRect).visible = false
+	($SubViewport/PanelContainer/Back as TextureRect).visible = true
+	is_flipped = true
+
+
+func show_card() -> void:
+	($SubViewport/PanelContainer/Front as TextureRect).visible = true
+	($SubViewport/PanelContainer/Back as TextureRect).visible = false
+	is_flipped = false
+
+
+func _animation_on_hand() -> void:
+	var t: Tween = get_tree().create_tween()
+	self.pivot_offset = size / 2
+	self.scale = Vector2(0, 0)
+	t.tween_property(self, "scale", Vector2(1, 1), randf() * .7).set_delay(randf() * .7).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SPRING)
+
+	
 # --- PUBLIC API --- # 
 
 func apply_mark_effect() -> void:
@@ -127,3 +177,10 @@ func apply_burn_effect() -> void:
 
 func remove_burn_effect() -> void:
 	is_burning = false
+
+
+func flip() -> void:
+	if not is_flipped:
+		hide_card()
+	else:
+		show_card()

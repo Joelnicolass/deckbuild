@@ -22,6 +22,7 @@ DeckService="*res://src/data/deck_service.gd"
 IntlService="*res://src/data/intl_service.gd"
 Enums="*res://src/domain/enums.gd"
 GameService="*res://src/data/game_service.gd"
+Utils="*res://src/data/utils_service.gd"
 
 [debug]
 

@@ -1,0 +1,65 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://im6t1fmssiov"]
+
+[ext_resource type="Shader" uid="uid://bpbay41ftasgx" path="res://src/common/shaders/card_effects.gdshader" id="1_4uund"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_lb5y4"]
+frequency = 0.0001
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n4d4s"]
+noise = SubResource("FastNoiseLite_lb5y4")
+seamless_blend_skirt = 1.0
+
+[sub_resource type="Gradient" id="Gradient_cqujy"]
+offsets = PackedFloat32Array(0, 0.31333333, 0.6766667, 0.99666667)
+colors = PackedColorArray(0.8862745, 0.48235294, 0, 1, 0.12156863, 0.5019608, 1, 1, 1, 0, 0.05882353, 1, 1, 0.5803922, 0.49019608, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_atd8j"]
+gradient = SubResource("Gradient_cqujy")
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_4uund")
+shader_parameter/mouse_position = Vector2(80, 0)
+shader_parameter/sprite_position = Vector2(0, 0)
+shader_parameter/fov = 90.0
+shader_parameter/cull_back = true
+shader_parameter/inset = 0.0
+shader_parameter/max_tilt = 0.150000007125
+shader_parameter/max_distance = 500.0
+shader_parameter/foilcolor = Color(0, 0, 0, 1)
+shader_parameter/threshold = 0.5000000074506
+shader_parameter/fuzziness = 0.46999998949456
+shader_parameter/period = 0.1
+shader_parameter/scroll = 1.0
+shader_parameter/normal_strength = 1.0
+shader_parameter/effect_alpha_mult = 0.3150000149625
+shader_parameter/direction = 0.5
+shader_parameter/foil_mask = SubResource("NoiseTexture2D_n4d4s")
+shader_parameter/gradient = SubResource("GradientTexture1D_atd8j")
+shader_parameter/enable_dissolve = false
+shader_parameter/dissolve_position = Vector2(1, 0)
+shader_parameter/dissolve_radius = 0.0
+shader_parameter/dissolve_borderWidth = 0.02
+shader_parameter/dissolve_burnMult = 0.135
+shader_parameter/dissolve_burnColor = Color(0, 0, 0, 1)
+shader_parameter/enable_fill = false
+shader_parameter/fill_progress = 0.5
+shader_parameter/fill_overlay_color = Color(0.2, 1, 0.2, 0.5)
+shader_parameter/fill_dir = Vector2(1, 0)
+shader_parameter/fill_alpha_cutoff = 0.01
+shader_parameter/enable_highlight = false
+shader_parameter/highlight_Line_Smoothness = 0.045
+shader_parameter/highlight_Line_Width = 0.09
+shader_parameter/highlight_Brightness = 3.0
+shader_parameter/highlight_Rotation_deg = 30.0
+shader_parameter/highlight_Distortion = 1.8
+shader_parameter/highlight_Speed = 0.7
+shader_parameter/highlight_Position = 0.0
+shader_parameter/highlight_Position_Min = 0.25
+shader_parameter/highlight_Position_Max = 0.5
+shader_parameter/highlight_Alpha = 1.0
+shader_parameter/enable_collapse = false
+shader_parameter/collapse_burst_progress = 0.0
+shader_parameter/collapse_spread_strength = 1.0
+shader_parameter/collapse_distortion_strength = 0.05
+shader_parameter/collapse_fade_start = 0.7
