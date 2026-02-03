@@ -7,7 +7,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3fio4"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lb5y4"]
-frequency = 0.0004
+frequency = 0.0001
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n4d4s"]
 noise = SubResource("FastNoiseLite_lb5y4")
@@ -31,15 +31,42 @@ shader_parameter/inset = 0.0
 shader_parameter/max_tilt = 0.150000007125
 shader_parameter/max_distance = 500.0
 shader_parameter/foilcolor = Color(0, 0, 0, 1)
-shader_parameter/threshold = 0.1
-shader_parameter/fuzziness = 1.0
-shader_parameter/period = 1.0
+shader_parameter/threshold = 1.0000000149012
+shader_parameter/fuzziness = 0.999999977648
+shader_parameter/period = 0.1
 shader_parameter/scroll = 1.0
-shader_parameter/normal_strength = 10.0
-shader_parameter/effect_alpha_mult = 1.0
+shader_parameter/normal_strength = 1.0
+shader_parameter/effect_alpha_mult = 0.6350000301625
 shader_parameter/direction = 0.5
 shader_parameter/foil_mask = SubResource("NoiseTexture2D_n4d4s")
 shader_parameter/gradient = SubResource("GradientTexture1D_atd8j")
+shader_parameter/enable_dissolve = false
+shader_parameter/dissolve_position = Vector2(1, 0)
+shader_parameter/dissolve_radius = 0.2
+shader_parameter/dissolve_borderWidth = 0.02
+shader_parameter/dissolve_burnMult = 0.135
+shader_parameter/dissolve_burnColor = Color(0, 0, 0, 1)
+shader_parameter/enable_fill = false
+shader_parameter/fill_progress = 0.5
+shader_parameter/fill_overlay_color = Color(0.2, 1, 0.2, 0.5)
+shader_parameter/fill_dir = Vector2(1, 0)
+shader_parameter/fill_alpha_cutoff = 0.01
+shader_parameter/enable_highlight = false
+shader_parameter/highlight_Line_Smoothness = 0.045
+shader_parameter/highlight_Line_Width = 0.09
+shader_parameter/highlight_Brightness = 3.0
+shader_parameter/highlight_Rotation_deg = 30.0
+shader_parameter/highlight_Distortion = 1.8
+shader_parameter/highlight_Speed = 0.7
+shader_parameter/highlight_Position = 0.0
+shader_parameter/highlight_Position_Min = 0.25
+shader_parameter/highlight_Position_Max = 0.5
+shader_parameter/highlight_Alpha = 1.0
+shader_parameter/enable_collapse = false
+shader_parameter/collapse_burst_progress = 0.0
+shader_parameter/collapse_spread_strength = 1.0
+shader_parameter/collapse_distortion_strength = 0.05
+shader_parameter/collapse_fade_start = 0.7
 
 [node name="CardLayout" type="SubViewportContainer"]
 offset_right = 80.0
