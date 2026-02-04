@@ -47,8 +47,18 @@ func _ready() -> void:
 	if is_flipped: hide_card()
 	else: show_card()
 	_animation_on_hand()
+	_animation_idle()
 
-	
+
+func _animation_idle() -> void:
+	await get_tree().create_timer((randf() * 2) + 2).timeout
+	var t: Tween = get_tree().create_tween()
+	t.tween_property(self, "scale", Vector2(0.96, 0.96), 2)
+
+	t.tween_property(self, 'scale', Vector2(1.0, 1.0), 2)
+	t.set_loops()
+
+
 func _process(delta: float) -> void:
 	_update_hover_effect()
 	_update_burn_effect(delta)
@@ -88,7 +98,7 @@ func _update_display() -> void:
 		card_material_back = node_texture_back.material
 
 		_setup_burn_effect()
-
+	
 
 # --- Private Utils --- #
 

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EffectSetting" load_steps=4 format=3 uid="uid://ykppjlhgcwry"]
+
+[ext_resource type="Script" uid="uid://dq4gubxvw2tdj" path="res://addons/pixel_art_shaders/effect_resources/classes/edge_shape.gd" id="1_lyy2p"]
+[ext_resource type="Script" uid="uid://crxiqf3hfp6wp" path="res://addons/pixel_art_shaders/effect_resources/effect_setting.gd" id="2_jbxq2"]
+
+[sub_resource type="Resource" id="Resource_5oryh"]
+script = ExtResource("1_lyy2p")
+
+[resource]
+script = ExtResource("2_jbxq2")
+id = 62
+name = "edge_shape"
+effect_type = "Edge Shape"
+effect_parameters = SubResource("Resource_5oryh")

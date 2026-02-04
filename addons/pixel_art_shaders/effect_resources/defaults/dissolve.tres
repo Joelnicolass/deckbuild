@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EffectSetting" load_steps=4 format=3 uid="uid://chp72n45v02lr"]
+
+[ext_resource type="Script" uid="uid://dinxety2f0sj7" path="res://addons/pixel_art_shaders/effect_resources/classes/dissolve.gd" id="1_v3vl4"]
+[ext_resource type="Script" uid="uid://crxiqf3hfp6wp" path="res://addons/pixel_art_shaders/effect_resources/effect_setting.gd" id="2_d6anq"]
+
+[sub_resource type="Resource" id="Resource_3dd5u"]
+script = ExtResource("1_v3vl4")
+
+[resource]
+script = ExtResource("2_d6anq")
+id = 61
+name = "dissolve"
+effect_type = "Dissolve"
+effect_parameters = SubResource("Resource_3dd5u")

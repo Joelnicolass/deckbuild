@@ -35,11 +35,16 @@ gdscript/warnings/unsafe_call_argument=1
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_width=360
+window/size/viewport_height=640
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+window/handheld/orientation=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/simple_cards/plugin.cfg")
+enabled=PackedStringArray("res://addons/pixel_ui_effects/plugin.cfg", "res://addons/simple_cards/plugin.cfg")
+
+[gui]
+
+common/show_focus_state_on_pointer_event=2

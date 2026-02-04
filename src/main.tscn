@@ -1,26 +1,130 @@
-[gd_scene load_steps=5 format=3 uid="uid://lvu26w7cu1pg"]
+[gd_scene load_steps=28 format=3 uid="uid://lvu26w7cu1pg"]
 
 [ext_resource type="Script" uid="uid://q480wihmrpi5" path="res://src/main.gd" id="1_eewff"]
 [ext_resource type="Shader" uid="uid://ixvefdt6ek0a" path="res://src/common/shaders/bg_distortion.gdshader" id="2_3cfgd"]
 [ext_resource type="Script" uid="uid://bbi8i6vef3f6y" path="res://addons/simple_cards/hand/card_hand.gd" id="2_5q4o7"]
+[ext_resource type="Shader" uid="uid://cvpt721gdpgr6" path="res://src/common/shaders/vignette.gdshader" id="3_3cfgd"]
+[ext_resource type="FontFile" uid="uid://c1eny26u6woqv" path="res://addons/pixel_ui_effects/fonts/NJ-PixelSmooth.ttf" id="5_mgm53"]
+[ext_resource type="Script" uid="uid://b1s6x4iyt2pps" path="res://addons/simple_cards/hand/shape/premade_shapes/line_shape.gd" id="5_uewes"]
+[ext_resource type="Script" uid="uid://crxiqf3hfp6wp" path="res://addons/pixel_art_shaders/effect_resources/effect_setting.gd" id="7_mlv6i"]
+[ext_resource type="Script" uid="uid://dq6fcmtprlfll" path="res://addons/pixel_ui_effects/pixel_rich_text_effect.gd" id="8_kf8lf"]
+[ext_resource type="Script" uid="uid://cpxv4si0yrc8y" path="res://addons/pixel_ui_effects/pixel_effects_label.gd" id="9_mgm53"]
+[ext_resource type="Script" uid="uid://dg56puyihu772" path="res://addons/pixel_art_shaders/effect_resources/classes/iterative_fire.gd" id="10_mgm53"]
+[ext_resource type="Script" uid="uid://cwn58mt8g2pkl" path="res://addons/pixel_art_shaders/effect_resources/classes/afterimage.gd" id="10_okx7f"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fyndt"]
 shader = ExtResource("2_3cfgd")
-shader_parameter/colorA = Color(0, 0, 0.5372549, 1)
-shader_parameter/colorB = Color(0.9019608, 0.14117648, 0.7058824, 1)
-shader_parameter/colorC = Color(0.61831224, 0.36073592, 0.55916995, 1)
+shader_parameter/colorA = Color(0.08235294, 0.03529412, 0.99215686, 1)
+shader_parameter/colorB = Color(0.16862746, 0, 0.11372549, 1)
+shader_parameter/colorC = Color(0.40392157, 0.2901961, 0.67058825, 1)
 shader_parameter/discomode = false
-shader_parameter/speed = 0.20000000624012
+shader_parameter/speed = 0.24500000837762
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kmhfv"]
+shader = ExtResource("3_3cfgd")
+shader_parameter/radius = 0.7
+shader_parameter/speed = 1.574000074765
+shader_parameter/effect_color = Color(0.6117647, 0.3019608, 1, 0.10980392)
+
+[sub_resource type="Resource" id="Resource_okx7f"]
+script = ExtResource("5_uewes")
+metadata/_custom_type_script = "uid://b1s6x4iyt2pps"
+
+[sub_resource type="Resource" id="Resource_sta5p"]
+script = ExtResource("5_uewes")
+metadata/_custom_type_script = "uid://b1s6x4iyt2pps"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uewes"]
+size = Vector2(451, 131)
+
+[sub_resource type="Resource" id="Resource_5mrjc"]
+script = ExtResource("10_mgm53")
+map_palette_ids = false
+random_frequency = 3.0
+spread = 0.2
+overlay_higher_colors = false
+edge_pixel_size = 4
+ignore_input_palette = true
+original_behind = false
+
+[sub_resource type="Resource" id="Resource_kf8lf"]
+script = ExtResource("7_mlv6i")
+id = 350
+name = "iterative_fire"
+effect_type = "Iterative Fire"
+effect_parameters = SubResource("Resource_5mrjc")
+effect_palette = Array[Color]([Color(0.9529412, 0.85490197, 0.5529412, 1), Color(1, 0.50980395, 0.45490196, 1), Color(0.8352941, 0.23529412, 0.41568628, 1), Color(0.4862745, 0.09411765, 0.23529412, 1), Color(0.12156863, 0.019607844, 0.0627451, 1)])
+
+[sub_resource type="Resource" id="Resource_mgm53"]
+script = ExtResource("10_okx7f")
+rotation_radius = 1.5
+pixel_perfect = false
+uv_x_angle_distortion = 1.0
+
+[sub_resource type="Resource" id="Resource_uewes"]
+script = ExtResource("7_mlv6i")
+id = 345
+name = "afterimage"
+effect_type = "Afterimage"
+effect_parameters = SubResource("Resource_mgm53")
+effect_palette = Array[Color]([Color(1, 0, 0, 1), Color(0, 1, 0, 1), Color(0, 0, 1, 1)])
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_mgm53"]
+script = ExtResource("8_kf8lf")
+effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_uewes")])
+hide_effects = true
+
+[sub_resource type="Resource" id="Resource_kqbth"]
+script = ExtResource("10_okx7f")
+rotation_radius = 1.5
+pixel_perfect = false
+uv_x_angle_distortion = 1.0
+
+[sub_resource type="Resource" id="Resource_srxbw"]
+script = ExtResource("7_mlv6i")
+id = 345
+name = "afterimage"
+effect_type = "Afterimage"
+effect_parameters = SubResource("Resource_kqbth")
+effect_palette = Array[Color]([Color(1, 0, 0, 1), Color(0, 1, 0, 1), Color(0, 0, 1, 1)])
+
+[sub_resource type="Resource" id="Resource_d3u4l"]
+script = ExtResource("10_okx7f")
+rotation_radius = 1.5
+pixel_perfect = false
+uv_x_angle_distortion = 1.0
+
+[sub_resource type="Resource" id="Resource_mlv6i"]
+script = ExtResource("7_mlv6i")
+id = 345
+name = "afterimage"
+effect_type = "Afterimage"
+effect_parameters = SubResource("Resource_d3u4l")
+effect_palette = Array[Color]([Color(1, 0, 0, 1), Color(0, 1, 0, 1), Color(0, 0, 1, 1)])
+
+[sub_resource type="Resource" id="Resource_tb146"]
+script = ExtResource("10_okx7f")
+rotation_radius = 1.5
+pixel_perfect = false
+uv_x_angle_distortion = 1.0
+
+[sub_resource type="Resource" id="Resource_e7lu8"]
+script = ExtResource("7_mlv6i")
+id = 345
+name = "afterimage"
+effect_type = "Afterimage"
+effect_parameters = SubResource("Resource_tb146")
+effect_palette = Array[Color]([Color(1, 0, 0, 1), Color(0, 1, 0, 1), Color(0, 0, 1, 1)])
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_eewff")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(640, 358)
+position = Vector2(180, 320)
 
-[node name="PostProcess" type="CanvasLayer" parent="."]
+[node name="Background" type="CanvasLayer" parent="."]
 
-[node name="Control" type="Control" parent="PostProcess"]
+[node name="Control" type="Control" parent="Background"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,8 +132,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="PostProcess/Control"]
+[node name="Background" type="ColorRect" parent="Background/Control"]
 material = SubResource("ShaderMaterial_fyndt")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -304.0
+offset_top = -2.0
+offset_right = -304.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.8399997, 1)
+
+[node name="Vignette" type="ColorRect" parent="Background/Control"]
+material = SubResource("ShaderMaterial_kmhfv")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,38 +164,55 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="CardHand" type="Control" parent="CanvasLayer/Control"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = 156.0
-offset_right = 20.0
-offset_bottom = 196.0
+anchor_bottom = 1.0
+offset_top = -155.0
+offset_bottom = -155.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 script = ExtResource("2_5q4o7")
+shape = SubResource("Resource_okx7f")
 metadata/_custom_type_script = "uid://bbi8i6vef3f6y"
 
 [node name="CardHand2" type="Control" parent="CanvasLayer/Control"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -205.0
-offset_right = 20.0
-offset_bottom = -165.0
+offset_top = 114.0
+offset_right = 40.0
+offset_bottom = 154.0
 grow_horizontal = 2
-grow_vertical = 2
 script = ExtResource("2_5q4o7")
+shape = SubResource("Resource_sta5p")
 metadata/_custom_type_script = "uid://bbi8i6vef3f6y"
+
+[node name="CardsPlayed" type="Control" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 321.0
+offset_right = 40.0
+offset_bottom = 361.0
+grow_horizontal = 2
+script = ExtResource("2_5q4o7")
+shape = SubResource("Resource_sta5p")
+metadata/_custom_type_script = "uid://bbi8i6vef3f6y"
+
+[node name="Area2D" type="Area2D" parent="CanvasLayer/Control"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Control/Area2D"]
+position = Vector2(180, 319)
+shape = SubResource("RectangleShape2D_uewes")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
@@ -103,3 +238,137 @@ theme_override_constants/margin_bottom = 16
 [node name="Label" type="Label" parent="CanvasLayer2/Control/MarginContainer"]
 layout_mode = 2
 text = "asdasasdasdasd"
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer3"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer3/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer3/Control/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+columns = 4
+
+[node name="Button" type="Button" parent="CanvasLayer3/Control/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer/GridContainer/Button"]
+z_index = 1
+texture_filter = 1
+layout_mode = 0
+offset_left = 5.0
+offset_top = 7.0
+offset_right = 75.0
+offset_bottom = 45.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("5_mgm53")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[pas id=afterimage]Flor[/pas]"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+custom_effects = [SubResource("RichTextEffect_mgm53")]
+script = ExtResource("9_mgm53")
+effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_uewes")])
+metadata/_custom_type_script = "uid://cpxv4si0yrc8y"
+
+[node name="Button2" type="Button" parent="CanvasLayer3/Control/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer/GridContainer/Button2"]
+z_index = 1
+texture_filter = 1
+layout_mode = 0
+offset_left = 4.0
+offset_top = 6.0
+offset_right = 74.0
+offset_bottom = 44.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("5_mgm53")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[pas id=afterimage]Envido[/pas]"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+custom_effects = [SubResource("RichTextEffect_mgm53")]
+script = ExtResource("9_mgm53")
+effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_srxbw")])
+metadata/_custom_type_script = "uid://cpxv4si0yrc8y"
+
+[node name="Button3" type="Button" parent="CanvasLayer3/Control/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer/GridContainer/Button3"]
+z_index = 1
+texture_filter = 1
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 71.0
+offset_bottom = 46.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("5_mgm53")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[pas id=afterimage]Truco[/pas]"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+custom_effects = [SubResource("RichTextEffect_mgm53")]
+script = ExtResource("9_mgm53")
+effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_mlv6i")])
+metadata/_custom_type_script = "uid://cpxv4si0yrc8y"
+
+[node name="Button4" type="Button" parent="CanvasLayer3/Control/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer/GridContainer/Button4"]
+z_index = 1
+texture_filter = 1
+layout_mode = 0
+offset_left = 3.0
+offset_top = 7.0
+offset_right = 76.0
+offset_bottom = 45.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("5_mgm53")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[pas id=afterimage]Mazo[/pas]"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+custom_effects = [SubResource("RichTextEffect_mgm53")]
+script = ExtResource("9_mgm53")
+effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_e7lu8")])
+metadata/_custom_type_script = "uid://cpxv4si0yrc8y"

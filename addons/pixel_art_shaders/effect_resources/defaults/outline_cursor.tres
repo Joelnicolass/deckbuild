@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EffectSetting" load_steps=4 format=3 uid="uid://chfnulscyulr4"]
+
+[ext_resource type="Script" uid="uid://bixv8ddbo381x" path="res://addons/pixel_art_shaders/effect_resources/classes/outline_cursor.gd" id="1_0lsoo"]
+[ext_resource type="Script" uid="uid://crxiqf3hfp6wp" path="res://addons/pixel_art_shaders/effect_resources/effect_setting.gd" id="2_hrj6s"]
+
+[sub_resource type="Resource" id="Resource_7qdia"]
+script = ExtResource("1_0lsoo")
+
+[resource]
+script = ExtResource("2_hrj6s")
+id = 66
+name = "outline_cursor"
+effect_type = "Outline Cursor"
+effect_parameters = SubResource("Resource_7qdia")

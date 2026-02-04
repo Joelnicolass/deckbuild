@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EffectSetting" load_steps=5 format=3 uid="uid://bc808057kox1j"]
+
+[ext_resource type="Texture2D" uid="uid://ccyusn4spfkex" path="res://addons/pixel_art_shaders/pixel_noise.tres" id="1_1ecpr"]
+[ext_resource type="Script" uid="uid://crxiqf3hfp6wp" path="res://addons/pixel_art_shaders/effect_resources/effect_setting.gd" id="1_x1q0x"]
+[ext_resource type="Script" uid="uid://dinxety2f0sj7" path="res://addons/pixel_art_shaders/effect_resources/classes/dissolve.gd" id="2_ajy2i"]
+
+[sub_resource type="Resource" id="Resource_v3vl4"]
+script = ExtResource("2_ajy2i")
+noise_texture = ExtResource("1_1ecpr")
+ignore_palette = true
+
+[resource]
+script = ExtResource("1_x1q0x")
+id = 347
+name = "dissolve"
+effect_type = "Dissolve"
+effect_parameters = SubResource("Resource_v3vl4")

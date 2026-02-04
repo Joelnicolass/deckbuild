@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EffectSetting" load_steps=4 format=3 uid="uid://cuauwerkgyrap"]
+
+[ext_resource type="Script" uid="uid://csixk01htffvt" path="res://addons/pixel_art_shaders/effect_resources/classes/fuzzy.gd" id="1_6wba8"]
+[ext_resource type="Script" uid="uid://crxiqf3hfp6wp" path="res://addons/pixel_art_shaders/effect_resources/effect_setting.gd" id="1_r58da"]
+
+[sub_resource type="Resource" id="Resource_jpg6t"]
+script = ExtResource("1_6wba8")
+keep_border_colors = false
+fuzziness = 0.2
+ignore_palette = true
+
+[resource]
+script = ExtResource("1_r58da")
+id = 349
+name = "fuzzy"
+effect_type = "Fuzzy"
+effect_parameters = SubResource("Resource_jpg6t")

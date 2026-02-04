@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EffectSetting" load_steps=5 format=3 uid="uid://bpdee1mwgi1l3"]
+
+[ext_resource type="Texture2D" uid="uid://ri0ujw8kkylr" path="res://addons/pixel_art_shaders/sample_noise.tres" id="1_2dwsp"]
+[ext_resource type="Script" uid="uid://crxiqf3hfp6wp" path="res://addons/pixel_art_shaders/effect_resources/effect_setting.gd" id="1_3mf64"]
+[ext_resource type="Script" uid="uid://byq1qltf12yvm" path="res://addons/pixel_art_shaders/effect_resources/classes/outline_wobble.gd" id="2_18yd0"]
+
+[sub_resource type="Resource" id="Resource_u5jdi"]
+script = ExtResource("2_18yd0")
+keep_border_colors = false
+palette_max_jump = 7.0
+ignore_palette = true
+noise_texture = ExtResource("1_2dwsp")
+noise_scale = 2.0
+
+[resource]
+script = ExtResource("1_3mf64")
+id = 353
+name = "outline_wobble"
+effect_type = "Outline Wobble"
+effect_parameters = SubResource("Resource_u5jdi")
+normalize_time = false
