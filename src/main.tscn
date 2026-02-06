@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://lvu26w7cu1pg"]
+[gd_scene load_steps=30 format=3 uid="uid://lvu26w7cu1pg"]
 
 [ext_resource type="Script" uid="uid://q480wihmrpi5" path="res://src/main.gd" id="1_eewff"]
 [ext_resource type="Shader" uid="uid://ixvefdt6ek0a" path="res://src/common/shaders/bg_distortion.gdshader" id="2_3cfgd"]
@@ -6,6 +6,7 @@
 [ext_resource type="Shader" uid="uid://cvpt721gdpgr6" path="res://src/common/shaders/vignette.gdshader" id="3_3cfgd"]
 [ext_resource type="FontFile" uid="uid://c1eny26u6woqv" path="res://addons/pixel_ui_effects/fonts/NJ-PixelSmooth.ttf" id="5_mgm53"]
 [ext_resource type="Script" uid="uid://b1s6x4iyt2pps" path="res://addons/simple_cards/hand/shape/premade_shapes/line_shape.gd" id="5_uewes"]
+[ext_resource type="Script" uid="uid://btwakv2103085" path="res://addons/simple_cards/slot/card_slot.gd" id="6_kqbth"]
 [ext_resource type="Script" uid="uid://crxiqf3hfp6wp" path="res://addons/pixel_art_shaders/effect_resources/effect_setting.gd" id="7_mlv6i"]
 [ext_resource type="Script" uid="uid://dq6fcmtprlfll" path="res://addons/pixel_ui_effects/pixel_rich_text_effect.gd" id="8_kf8lf"]
 [ext_resource type="Script" uid="uid://cpxv4si0yrc8y" path="res://addons/pixel_ui_effects/pixel_effects_label.gd" id="9_mgm53"]
@@ -36,6 +37,9 @@ metadata/_custom_type_script = "uid://b1s6x4iyt2pps"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uewes"]
 size = Vector2(451, 131)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_srxbw"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="Resource" id="Resource_5mrjc"]
 script = ExtResource("10_mgm53")
@@ -123,6 +127,7 @@ script = ExtResource("1_eewff")
 position = Vector2(180, 320)
 
 [node name="Background" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Control" type="Control" parent="Background"]
 layout_mode = 3
@@ -195,24 +200,86 @@ script = ExtResource("2_5q4o7")
 shape = SubResource("Resource_sta5p")
 metadata/_custom_type_script = "uid://bbi8i6vef3f6y"
 
-[node name="CardsPlayed" type="Control" parent="CanvasLayer/Control"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_top = 321.0
-offset_right = 40.0
-offset_bottom = 361.0
-grow_horizontal = 2
-script = ExtResource("2_5q4o7")
-shape = SubResource("Resource_sta5p")
-metadata/_custom_type_script = "uid://bbi8i6vef3f6y"
-
 [node name="Area2D" type="Area2D" parent="CanvasLayer/Control"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Control/Area2D"]
 position = Vector2(180, 319)
 shape = SubResource("RectangleShape2D_uewes")
+
+[node name="PlayZoneColorRect" type="ColorRect" parent="CanvasLayer/Control/Area2D"]
+visible = false
+offset_left = -62.000004
+offset_top = 258.00003
+offset_right = -22.000004
+offset_bottom = 298.00003
+scale = Vector2(12.324998, 3.0776994)
+color = Color(1, 0, 0, 0.14901961)
+
+[node name="CardSlot1Player2" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 257.0
+offset_right = 72.0
+offset_bottom = 297.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_srxbw")
+script = ExtResource("6_kqbth")
+slot_locked = true
+metadata/_custom_type_script = "uid://btwakv2103085"
+
+[node name="CardSlot1Player1" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 339.0
+offset_right = 72.0
+offset_bottom = 379.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_srxbw")
+script = ExtResource("6_kqbth")
+slot_locked = true
+metadata/_custom_type_script = "uid://btwakv2103085"
+
+[node name="CardSlot2Player2" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 159.0
+offset_top = 257.0
+offset_right = 199.0
+offset_bottom = 297.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_srxbw")
+script = ExtResource("6_kqbth")
+slot_locked = true
+metadata/_custom_type_script = "uid://btwakv2103085"
+
+[node name="CardSlot2Player1" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 159.0
+offset_top = 339.0
+offset_right = 199.0
+offset_bottom = 379.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_srxbw")
+script = ExtResource("6_kqbth")
+slot_locked = true
+metadata/_custom_type_script = "uid://btwakv2103085"
+
+[node name="CardSlot3Player2" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 257.0
+offset_right = 328.0
+offset_bottom = 297.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_srxbw")
+script = ExtResource("6_kqbth")
+slot_locked = true
+metadata/_custom_type_script = "uid://btwakv2103085"
+
+[node name="CardSlot3Player1" type="Panel" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 339.0
+offset_right = 328.0
+offset_bottom = 379.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_srxbw")
+script = ExtResource("6_kqbth")
+slot_locked = true
+metadata/_custom_type_script = "uid://btwakv2103085"
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 

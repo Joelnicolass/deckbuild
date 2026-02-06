@@ -47,16 +47,6 @@ func _ready() -> void:
 	if is_flipped: hide_card()
 	else: show_card()
 	_animation_on_hand()
-	_animation_idle()
-
-
-func _animation_idle() -> void:
-	await get_tree().create_timer((randf() * 2) + 2).timeout
-	var t: Tween = get_tree().create_tween()
-	t.tween_property(self, "scale", Vector2(0.96, 0.96), 2)
-
-	t.tween_property(self, 'scale', Vector2(1.0, 1.0), 2)
-	t.set_loops()
 
 
 func _process(delta: float) -> void:
@@ -113,6 +103,7 @@ func _setup_burn_effect() -> void:
 
 func _update_burn_effect(delta: float) -> void:
 	if not is_burning: return
+	
 	card_material_front.set_shader_parameter('enable_dissolve', true)
 	card_material_front.set_shader_parameter('dissolve_radius', burn_radius)
 
@@ -122,6 +113,8 @@ func _update_burn_effect(delta: float) -> void:
 
 
 func _update_hover_effect() -> void:
+	if not card_material_front or not card_material_back: return
+	
 	if is_hovered:
 		card_material_front.set_shader_parameter("mouse_position", get_global_mouse_position())
 		card_material_front.set_shader_parameter("sprite_position", global_position + size / 2)
@@ -137,6 +130,8 @@ func _update_hover_effect() -> void:
 
 
 func _update_mark_effect() -> void:
+	if is_burning: return
+	
 	if is_marked:
 		card_material_front.set_shader_parameter('enable_dissolve', true)
 		card_material_front.set_shader_parameter('dissolve_radius', mark_radius)
@@ -172,6 +167,15 @@ func _animation_on_hand() -> void:
 	self.pivot_offset = size / 2
 	self.scale = Vector2(0, 0)
 	t.tween_property(self, "scale", Vector2(1, 1), randf() * .7).set_delay(randf() * .7).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SPRING)
+	t.finished.connect(_animation_idle)
+
+func _animation_idle() -> void:
+	await get_tree().create_timer((randf() * 0.5)).timeout
+	var t: Tween = get_tree().create_tween()
+	t.tween_property(self, "scale", Vector2(0.96, 0.96), 2)
+
+	t.tween_property(self, 'scale', Vector2(1.0, 1.0), 2)
+	t.set_loops()
 
 	
 # --- PUBLIC API --- # 
@@ -184,6 +188,8 @@ func remove_mark_effect() -> void:
 
 func apply_burn_effect() -> void:
 	is_burning = true
+	burn_radius = 0.0
+	
 
 func remove_burn_effect() -> void:
 	is_burning = false
