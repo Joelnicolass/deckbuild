@@ -81,8 +81,10 @@ func _on_round_result(result: Dictionary) -> void:
 	if loser_card and winner_card:
 		await get_tree().create_timer(0.1).timeout
 		
+		var winner_offset: Vector2 = Vector2.DOWN * 100 if result["winner"]["player"] == GameManagerService.Player.PLAYER_1 else Vector2.UP * 100
+
 		var loser_pos: Vector2 = loser_card_ref.global_position
-		var winner_pos: Vector2 = winner_card_ref.global_position + (Vector2.DOWN * 100 if result["winner"]["player"] == GameManagerService.Player.PLAYER_1 else Vector2.UP * 100)
+		var winner_pos: Vector2 = winner_card_ref.global_position + winner_offset
 		var center_pos: Vector2 = (loser_pos + winner_pos) / 2.0
 		
 		loser_card_ref.z_index = winner_card_ref.z_index - 1
@@ -92,13 +94,12 @@ func _on_round_result(result: Dictionary) -> void:
 		t.set_ease(Tween.EASE_IN_OUT)
 		t.set_trans(Tween.TRANS_SPRING)
 		
-		
 		t.tween_property(loser_card, "modulate", Color.GRAY, 0.4)
 		t.tween_property(loser_card_ref, "global_position", center_pos, 0.2)
 		t.tween_property(loser_card_ref, "rotation_degrees", randf_range(-10, 10), 0.2).as_relative()
 		
 		t.tween_property(winner_card, "rotation_degrees", randf_range(-10, 10), 0.2).as_relative()
-		t.tween_property(winner_card_ref, "global_position", center_pos, 0.4)
+		t.tween_property(winner_card_ref, "global_position", center_pos, 0.2)
 		
 
 # ============================================================================
