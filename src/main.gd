@@ -70,21 +70,36 @@ func _on_round_started(round_turn: GameManagerService.Turn, starting_player: Gam
 
 
 func _on_round_result(result: Dictionary) -> void:
-	var loser_card_ref: Card = result["loser"]["card"] as Card
-	if not loser_card_ref: return
+	var loser_card_ref: Card = result["loser"]["card"]
+	var winner_card_ref: Card = result["winner"]["card"]
 	
-	# Verificar que la carta esté en un slot (jugada) y no en la mano
-	var card_parent: Node = loser_card_ref.get_parent()
-	if card_parent is CardHand:
-		# La carta está en la mano, no debería aplicar el efecto
-		print("ERROR: Intento de aplicar burn effect a carta en mano")
-		return
-	
-	# Aplicar el efecto solo si la carta está en un slot
-	var loser_card: CardTrucoVM = loser_card_ref.get_layout() as CardTrucoVM
-	if loser_card:
-		loser_card.apply_burn_effect()
+	if not loser_card_ref or not winner_card_ref: return
 
+	var loser_card: CardTrucoVM = loser_card_ref.get_layout()
+	var winner_card: CardTrucoVM = winner_card_ref.get_layout()
+	
+	if loser_card and winner_card:
+		await get_tree().create_timer(0.1).timeout
+		
+		var loser_pos: Vector2 = loser_card_ref.global_position
+		var winner_pos: Vector2 = winner_card_ref.global_position + (Vector2.DOWN * 100 if result["winner"]["player"] == GameManagerService.Player.PLAYER_1 else Vector2.UP * 100)
+		var center_pos: Vector2 = (loser_pos + winner_pos) / 2.0
+		
+		loser_card_ref.z_index = winner_card_ref.z_index - 1
+		
+		var t: Tween = create_tween()
+		t.set_parallel(true)
+		t.set_ease(Tween.EASE_IN_OUT)
+		t.set_trans(Tween.TRANS_SPRING)
+		
+		
+		t.tween_property(loser_card, "modulate", Color.GRAY, 0.4)
+		t.tween_property(loser_card_ref, "global_position", center_pos, 0.2)
+		t.tween_property(loser_card_ref, "rotation_degrees", randf_range(-10, 10), 0.2).as_relative()
+		
+		t.tween_property(winner_card, "rotation_degrees", randf_range(-10, 10), 0.2).as_relative()
+		t.tween_property(winner_card_ref, "global_position", center_pos, 0.4)
+		
 
 # ============================================================================
 # PRIVATE METHODS

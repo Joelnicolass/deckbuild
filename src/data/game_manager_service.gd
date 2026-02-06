@@ -86,6 +86,9 @@ var current_round_cards: Dictionary = {
 	Player.PLAYER_2: null
 }
 
+# Control para evitar múltiples llamadas a ai_request
+var _ai_request_in_progress: bool = false
+
 # ============================================================================
 # PUBLIC API
 # ============================================================================
@@ -129,10 +132,31 @@ func play_card(card: Card, player: Player) -> void:
 
 	
 func ai_request() -> void:
+	if _ai_request_in_progress: return
+	if current_player != Player.PLAYER_2: return
 	if cards_player_2.cards.is_empty(): return
+	if game_state == GameState.GAME_OVER: return
+
+	_ai_request_in_progress = true
+	
+	await get_tree().create_timer(1.0).timeout
+	
+	if current_player != Player.PLAYER_2:
+		_ai_request_in_progress = false
+		return
+
+	if cards_player_2.cards.is_empty():
+		_ai_request_in_progress = false
+		return
+
+	if game_state == GameState.GAME_OVER:
+		_ai_request_in_progress = false
+		return
 	
 	var random_card: Card = cards_player_2.cards.pick_random()
 	play_card(random_card, Player.PLAYER_2)
+	
+	_ai_request_in_progress = false
 
 
 # ============================================================================
@@ -148,6 +172,7 @@ func _on_card_played(card: Card, player: Player) -> void:
 
 func _switch_to_next_player() -> void:
 	current_player = Player.PLAYER_2 if current_player == Player.PLAYER_1 else Player.PLAYER_1
+	_ai_request_in_progress = false # Resetear flag cuando cambia el turno
 	turn_changed.emit(current_player)
 
 
@@ -205,6 +230,7 @@ func _start_next_round(round_winner: Player) -> void:
 	
 	current_turn = next_round
 	current_player = round_winner
+	_ai_request_in_progress = false # Resetear flag cuando inicia nueva ronda
 	
 	_reset_round_cards()
 	

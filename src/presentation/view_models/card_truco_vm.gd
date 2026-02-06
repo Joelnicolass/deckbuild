@@ -15,6 +15,7 @@ var card_material_back: ShaderMaterial = null
 @export var burn_velocity: float = 0.1
 @export var is_burning: bool = false
 @export var burn_radius: float = 0.0
+@export var burn_limit: float = 2.0
 
 @export var is_marked: bool = false
 @export var mark_radius: float = 0.2
@@ -103,6 +104,8 @@ func _setup_burn_effect() -> void:
 
 func _update_burn_effect(delta: float) -> void:
 	if not is_burning: return
+
+	if burn_radius >= burn_limit: return
 	
 	card_material_front.set_shader_parameter('enable_dissolve', true)
 	card_material_front.set_shader_parameter('dissolve_radius', burn_radius)
