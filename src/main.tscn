@@ -127,6 +127,7 @@ script = ExtResource("1_eewff")
 position = Vector2(180, 320)
 
 [node name="Background" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Control" type="Control" parent="Background"]
 layout_mode = 3
