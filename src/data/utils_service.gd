@@ -162,7 +162,7 @@ func eval_possbile_results(player_1_cards: Array[CardData], player_2_cards: Arra
 	# Verificar todas las combinaciones de cartas entre player 1 y player 2
 	for card_1: CardData in player_1_cards:
 		for card_2: CardData in player_2_cards:
-			var result_truco: Dictionary = GameService.eval_truco(card_1, card_2)
+			var result_truco: Dictionary = GameService.eval_power_cards(card_1, card_2)
 			var winner: Variant = result_truco.get("winner", null)
 			
 			var combination_result: Dictionary = {

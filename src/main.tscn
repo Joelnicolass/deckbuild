@@ -59,25 +59,6 @@ effect_type = "Iterative Fire"
 effect_parameters = SubResource("Resource_5mrjc")
 effect_palette = Array[Color]([Color(0.9529412, 0.85490197, 0.5529412, 1), Color(1, 0.50980395, 0.45490196, 1), Color(0.8352941, 0.23529412, 0.41568628, 1), Color(0.4862745, 0.09411765, 0.23529412, 1), Color(0.12156863, 0.019607844, 0.0627451, 1)])
 
-[sub_resource type="Resource" id="Resource_mgm53"]
-script = ExtResource("10_okx7f")
-rotation_radius = 1.5
-pixel_perfect = false
-uv_x_angle_distortion = 1.0
-
-[sub_resource type="Resource" id="Resource_uewes"]
-script = ExtResource("7_mlv6i")
-id = 345
-name = "afterimage"
-effect_type = "Afterimage"
-effect_parameters = SubResource("Resource_mgm53")
-effect_palette = Array[Color]([Color(1, 0, 0, 1), Color(0, 1, 0, 1), Color(0, 0, 1, 1)])
-
-[sub_resource type="RichTextEffect" id="RichTextEffect_mgm53"]
-script = ExtResource("8_kf8lf")
-effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_uewes")])
-hide_effects = true
-
 [sub_resource type="Resource" id="Resource_kqbth"]
 script = ExtResource("10_okx7f")
 rotation_radius = 1.5
@@ -90,6 +71,25 @@ id = 345
 name = "afterimage"
 effect_type = "Afterimage"
 effect_parameters = SubResource("Resource_kqbth")
+effect_palette = Array[Color]([Color(1, 0, 0, 1), Color(0, 1, 0, 1), Color(0, 0, 1, 1)])
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_mgm53"]
+script = ExtResource("8_kf8lf")
+effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_srxbw")])
+hide_effects = true
+
+[sub_resource type="Resource" id="Resource_mgm53"]
+script = ExtResource("10_okx7f")
+rotation_radius = 1.5
+pixel_perfect = false
+uv_x_angle_distortion = 1.0
+
+[sub_resource type="Resource" id="Resource_uewes"]
+script = ExtResource("7_mlv6i")
+id = 345
+name = "afterimage"
+effect_type = "Afterimage"
+effect_parameters = SubResource("Resource_mgm53")
 effect_palette = Array[Color]([Color(1, 0, 0, 1), Color(0, 1, 0, 1), Color(0, 0, 1, 1)])
 
 [sub_resource type="Resource" id="Resource_d3u4l"]
@@ -127,7 +127,6 @@ script = ExtResource("1_eewff")
 position = Vector2(180, 320)
 
 [node name="Background" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="Control" type="Control" parent="Background"]
 layout_mode = 3
@@ -179,8 +178,8 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_top = -155.0
-offset_bottom = -155.0
+offset_top = -197.0
+offset_bottom = -197.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("2_5q4o7")
@@ -192,9 +191,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_top = 114.0
+offset_top = 70.0
 offset_right = 40.0
-offset_bottom = 154.0
+offset_bottom = 110.0
 grow_horizontal = 2
 script = ExtResource("2_5q4o7")
 shape = SubResource("Resource_sta5p")
@@ -203,24 +202,24 @@ metadata/_custom_type_script = "uid://bbi8i6vef3f6y"
 [node name="Area2D" type="Area2D" parent="CanvasLayer/Control"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Control/Area2D"]
-position = Vector2(180, 319)
+position = Vector2(180, 252)
 shape = SubResource("RectangleShape2D_uewes")
 
 [node name="PlayZoneColorRect" type="ColorRect" parent="CanvasLayer/Control/Area2D"]
 visible = false
 offset_left = -62.000004
-offset_top = 258.00003
+offset_top = 191.00003
 offset_right = -22.000004
-offset_bottom = 298.00003
+offset_bottom = 231.00003
 scale = Vector2(12.324998, 3.0776994)
 color = Color(1, 0, 0, 0.14901961)
 
 [node name="CardSlot1Player2" type="Panel" parent="CanvasLayer/Control"]
 layout_mode = 0
 offset_left = 32.0
-offset_top = 257.0
+offset_top = 205.0
 offset_right = 72.0
-offset_bottom = 297.0
+offset_bottom = 245.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_srxbw")
 script = ExtResource("6_kqbth")
 slot_locked = true
@@ -229,9 +228,9 @@ metadata/_custom_type_script = "uid://btwakv2103085"
 [node name="CardSlot1Player1" type="Panel" parent="CanvasLayer/Control"]
 layout_mode = 0
 offset_left = 32.0
-offset_top = 339.0
+offset_top = 287.0
 offset_right = 72.0
-offset_bottom = 379.0
+offset_bottom = 327.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_srxbw")
 script = ExtResource("6_kqbth")
 slot_locked = true
@@ -240,9 +239,9 @@ metadata/_custom_type_script = "uid://btwakv2103085"
 [node name="CardSlot2Player2" type="Panel" parent="CanvasLayer/Control"]
 layout_mode = 0
 offset_left = 159.0
-offset_top = 257.0
+offset_top = 205.0
 offset_right = 199.0
-offset_bottom = 297.0
+offset_bottom = 245.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_srxbw")
 script = ExtResource("6_kqbth")
 slot_locked = true
@@ -251,9 +250,9 @@ metadata/_custom_type_script = "uid://btwakv2103085"
 [node name="CardSlot2Player1" type="Panel" parent="CanvasLayer/Control"]
 layout_mode = 0
 offset_left = 159.0
-offset_top = 339.0
+offset_top = 287.0
 offset_right = 199.0
-offset_bottom = 379.0
+offset_bottom = 327.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_srxbw")
 script = ExtResource("6_kqbth")
 slot_locked = true
@@ -262,9 +261,9 @@ metadata/_custom_type_script = "uid://btwakv2103085"
 [node name="CardSlot3Player2" type="Panel" parent="CanvasLayer/Control"]
 layout_mode = 0
 offset_left = 288.0
-offset_top = 257.0
+offset_top = 205.0
 offset_right = 328.0
-offset_bottom = 297.0
+offset_bottom = 245.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_srxbw")
 script = ExtResource("6_kqbth")
 slot_locked = true
@@ -273,9 +272,9 @@ metadata/_custom_type_script = "uid://btwakv2103085"
 [node name="CardSlot3Player1" type="Panel" parent="CanvasLayer/Control"]
 layout_mode = 0
 offset_left = 288.0
-offset_top = 339.0
+offset_top = 287.0
 offset_right = 328.0
-offset_bottom = 379.0
+offset_bottom = 327.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_srxbw")
 script = ExtResource("6_kqbth")
 slot_locked = true
@@ -439,3 +438,78 @@ custom_effects = [SubResource("RichTextEffect_mgm53")]
 script = ExtResource("9_mgm53")
 effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_e7lu8")])
 metadata/_custom_type_script = "uid://cpxv4si0yrc8y"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer3/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -127.0
+offset_bottom = -61.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer3/Control/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+columns = 2
+
+[node name="Accept" type="Button" parent="CanvasLayer3/Control/MarginContainer2/GridContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer2/GridContainer/Accept"]
+z_index = 1
+texture_filter = 1
+layout_mode = 0
+offset_left = 7.0
+offset_top = 6.0
+offset_right = 158.0
+offset_bottom = 44.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("5_mgm53")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[pas id=afterimage]Si Quiero[/pas]"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+custom_effects = [SubResource("RichTextEffect_mgm53")]
+script = ExtResource("9_mgm53")
+effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_uewes")])
+metadata/_custom_type_script = "uid://cpxv4si0yrc8y"
+
+[node name="Reject" type="Button" parent="CanvasLayer3/Control/MarginContainer2/GridContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer2/GridContainer/Reject"]
+z_index = 1
+texture_filter = 1
+layout_mode = 0
+offset_left = 6.0
+offset_top = 8.0
+offset_right = 162.0
+offset_bottom = 46.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("5_mgm53")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[pas id=afterimage]No Quiero[/pas]"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+custom_effects = [SubResource("RichTextEffect_mgm53")]
+script = ExtResource("9_mgm53")
+effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_srxbw")])
+metadata/_custom_type_script = "uid://cpxv4si0yrc8y"
+
+[connection signal="pressed" from="CanvasLayer3/Control/MarginContainer2/GridContainer/Accept" to="." method="_on_accept_pressed"]
+[connection signal="pressed" from="CanvasLayer3/Control/MarginContainer2/GridContainer/Reject" to="." method="_on_reject_pressed"]

@@ -62,7 +62,7 @@ func get_card_power(card: CardData) -> int:
 	return 999
 
 
-func eval_truco(card_1: CardData, card_2: CardData) -> Dictionary:
+func eval_power_cards(card_1: CardData, card_2: CardData) -> Dictionary:
 	var power_1: int = get_card_power(card_1)
 	var power_2: int = get_card_power(card_2)
 	
