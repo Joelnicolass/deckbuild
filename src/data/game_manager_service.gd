@@ -105,7 +105,7 @@ func initialize(cards_p1: CardHand, cards_p2: CardHand, slots_p1: Array[CardSlot
 
 func start_game() -> void:
 	randomize()
-	initial_player = Player.PLAYER_2 if randf() < 0.5 else Player.PLAYER_2
+	initial_player = Player.PLAYER_1 if randf() < 0.5 else Player.PLAYER_2
 	current_player = initial_player
 	current_turn = Turn.ROUND_1
 	_reset_round_cards()
