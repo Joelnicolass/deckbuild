@@ -15,3 +15,23 @@ enum Action {
 	ACEPTAR,
 	RECHAZAR,
 }
+
+
+enum Player {
+	PLAYER_1,
+	PLAYER_2
+}
+
+enum Turn {
+	ROUND_1,
+	ROUND_2,
+	ROUND_3
+}
+
+enum GameState {
+	WAITING_ACTION,
+	WAITING_RESPONSE,
+	PLAYING_CARD,
+	EVALUATING_ROUND,
+	GAME_OVER,
+}

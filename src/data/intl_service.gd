@@ -78,6 +78,36 @@ var WORDINGS_TRUCO_DESCRIPTIONS: Dictionary = {
 }
 
 
+const GAME_STATE_WORDINGS: Dictionary = {
+	Enums.GameState.WAITING_ACTION: "Esperando acción",
+	Enums.GameState.WAITING_RESPONSE: "Esperando respuesta",
+	Enums.GameState.PLAYING_CARD: "Jugando carta",
+	Enums.GameState.EVALUATING_ROUND: "Evaluando ronda",
+	Enums.GameState.GAME_OVER: "Partida terminada",
+}
+
+const TURN_WORDINGS: Dictionary = {
+	Enums.Turn.ROUND_1: "Mano 1",
+	Enums.Turn.ROUND_2: "Mano 2",
+	Enums.Turn.ROUND_3: "Mano 3",
+}
+
+const ACTION_WORDINGS: Dictionary = {
+	Enums.Action.FLOR: "Flor",
+	Enums.Action.ENVIDO: "Envido",
+	Enums.Action.TRUCO: "Truco",
+	Enums.Action.RETRUCO: "Retruco",
+	Enums.Action.VALE_4: "Vale 4",
+	Enums.Action.ACEPTAR: "Aceptar",
+	Enums.Action.RECHAZAR: "Rechazar",
+}
+
+const PLAYER_WORDINGS: Dictionary = {
+	Enums.Player.PLAYER_1: "Jugador 1",
+	Enums.Player.PLAYER_2: "Jugador 2",
+}
+
+
 func get_card_name(card: CardData) -> String:
 	var value_name: String = IntlService.WORDINGS_VALUE.get(card.card_value, "Desconocido")
 	var suit_name: String = IntlService.WORDINGS_SUIT.get(card.card_suit, "Desconocido")

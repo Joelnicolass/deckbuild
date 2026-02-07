@@ -37,8 +37,6 @@ func _initialize_signals() -> void:
 	_connect_drag_and_drop_signals()
 	GameManagerService.game_started.connect(_on_game_started)
 	GameManagerService.turn_changed.connect(_on_turn_changed)
-	GameManagerService.round_ended.connect(_on_round_ended)
-	GameManagerService.round_started.connect(_on_round_started)
 	GameManagerService.round_result.connect(_on_round_result)
 
 
@@ -46,27 +44,16 @@ func _initialize_signals() -> void:
 # GAME MANAGER SIGNALS
 # ============================================================================
 
-func _on_game_started(initial_player: GameManagerService.Player) -> void:
+func _on_game_started(initial_player: Enums.Player) -> void:
 	_on_turn_changed(initial_player)
 
 
-func _on_turn_changed(new_player: GameManagerService.Player) -> void:
-	if new_player == GameManagerService.Player.PLAYER_1:
+func _on_turn_changed(new_player: Enums.Player) -> void:
+	if new_player == Enums.Player.PLAYER_1:
 		_set_enable_drag_cards(cards_player_1.cards, true)
 	else:
 		_set_enable_drag_cards(cards_player_1.cards, false)
 		GameManagerService.ai_request()
-
-
-func _on_round_ended(winner: GameManagerService.Player) -> void:
-	var winner_name: String = "Jugador 1" if winner == GameManagerService.Player.PLAYER_1 else "Jugador 2"
-	print("Ronda terminada. Ganador: ", winner_name)
-
-
-func _on_round_started(round_turn: GameManagerService.Turn, starting_player: GameManagerService.Player) -> void:
-	var round_name: String = GameManagerService.TURN_WORDINGS.get(round_turn, "Ronda desconocida")
-	var player_name: String = "Jugador 1" if starting_player == GameManagerService.Player.PLAYER_1 else "Jugador 2"
-	print("Nueva ronda: ", round_name, " - Comienza: ", player_name)
 
 
 func _on_round_result(result: Dictionary) -> void:
@@ -81,7 +68,7 @@ func _on_round_result(result: Dictionary) -> void:
 	if loser_card and winner_card:
 		await get_tree().create_timer(0.1).timeout
 		
-		var winner_offset: Vector2 = Vector2.DOWN * 100 if result["winner"]["player"] == GameManagerService.Player.PLAYER_1 else Vector2.UP * 100
+		var winner_offset: Vector2 = Vector2.DOWN * 100 if result["winner"]["player"] == Enums.Player.PLAYER_1 else Vector2.UP * 100
 
 		var loser_pos: Vector2 = loser_card_ref.global_position
 		var winner_pos: Vector2 = winner_card_ref.global_position + winner_offset
@@ -115,7 +102,7 @@ func _on_card_clicked(card: Card) -> void:
 
 
 func _move_card_to_played(card: Card) -> void:
-	GameManagerService.play_card(card, GameManagerService.Player.PLAYER_1)
+	GameManagerService.play_card(card, Enums.Player.PLAYER_1)
 	card.position_offset = Vector2.ZERO
 
 
