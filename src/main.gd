@@ -202,3 +202,10 @@ func _print_cards_size() -> void:
 		var cards: Array = deck_data.get(suit, [])
 		total_cards += cards.size()
 	print("Total cards: ", total_cards)
+
+
+func _on_accept_pressed() -> void:
+	GameManagerService.respond_to_action(true, Enums.Player.PLAYER_1)
+
+func _on_reject_pressed() -> void:
+	GameManagerService.respond_to_action(false, Enums.Player.PLAYER_1)
