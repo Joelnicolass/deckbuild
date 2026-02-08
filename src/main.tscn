@@ -387,12 +387,12 @@ script = ExtResource("9_mgm53")
 effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_srxbw")])
 metadata/_custom_type_script = "uid://cpxv4si0yrc8y"
 
-[node name="Button3" type="Button" parent="CanvasLayer3/Control/MarginContainer/GridContainer"]
+[node name="Truco" type="Button" parent="CanvasLayer3/Control/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer/GridContainer/Button3"]
+[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer/GridContainer/Truco"]
 z_index = 1
 texture_filter = 1
 layout_mode = 0
@@ -511,5 +511,6 @@ script = ExtResource("9_mgm53")
 effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_srxbw")])
 metadata/_custom_type_script = "uid://cpxv4si0yrc8y"
 
+[connection signal="pressed" from="CanvasLayer3/Control/MarginContainer/GridContainer/Truco" to="." method="_on_truco_pressed"]
 [connection signal="pressed" from="CanvasLayer3/Control/MarginContainer2/GridContainer/Accept" to="." method="_on_accept_pressed"]
 [connection signal="pressed" from="CanvasLayer3/Control/MarginContainer2/GridContainer/Reject" to="." method="_on_reject_pressed"]

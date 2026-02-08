@@ -35,25 +35,31 @@ func _initialize_game_manager() -> void:
 
 func _initialize_signals() -> void:
 	_connect_drag_and_drop_signals()
-	GameManagerService.game_started.connect(_on_game_started)
-	GameManagerService.turn_changed.connect(_on_turn_changed)
+	GameManagerService.turn_started.connect(_on_turn_started)
+	GameManagerService.must_play_card.connect(_on_must_play_card)
 	GameManagerService.round_result.connect(_on_round_result)
+	GameManagerService.action_requested.connect(_on_action_requested)
 
 
 # ============================================================================
 # GAME MANAGER SIGNALS
 # ============================================================================
 
-func _on_game_started(initial_player: Enums.Player) -> void:
-	_on_turn_changed(initial_player)
-
-
-func _on_turn_changed(new_player: Enums.Player) -> void:
-	if new_player == Enums.Player.PLAYER_1:
+## Comienza el turno de un jugador (puede cantar o tirar carta)
+func _on_turn_started(player: Enums.Player) -> void:
+	if player == Enums.Player.PLAYER_1:
 		_set_enable_drag_cards(cards_player_1.cards, true)
 	else:
 		_set_enable_drag_cards(cards_player_1.cards, false)
-		GameManagerService.ai_request()
+		GameManagerService.ai_turn()
+
+
+## El jugador DEBE tirar carta (después de resolver un canto)
+func _on_must_play_card(player: Enums.Player) -> void:
+	if player == Enums.Player.PLAYER_1:
+		_set_enable_drag_cards(cards_player_1.cards, true)
+	else:
+		GameManagerService.ai_play_card()
 
 
 func _on_round_result(result: Dictionary) -> void:
@@ -209,3 +215,18 @@ func _on_accept_pressed() -> void:
 
 func _on_reject_pressed() -> void:
 	GameManagerService.respond_to_action(false, Enums.Player.PLAYER_1)
+
+
+func _on_truco_pressed() -> void:
+	# Verificar que es el turno del jugador 1
+	if GameManagerService.current_player != Enums.Player.PLAYER_1:
+		return
+	
+	# Solicitar acción TRUCO
+	GameManagerService.request_action(Enums.Action.TRUCO, Enums.Player.PLAYER_1)
+
+
+func _on_action_requested(_action: Enums.Action, requester: Enums.Player) -> void:
+	# Si el jugador 1 cantó, la IA debe responder
+	if requester == Enums.Player.PLAYER_1:
+		GameManagerService.ai_respond_to_action()
