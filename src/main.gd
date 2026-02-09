@@ -103,6 +103,15 @@ func _on_round_result(result: Dictionary) -> void:
 		t.tween_property(winner_card_ref, "global_position", center_pos, 0.2)
 		
 
+func _on_action_requested(action: Enums.Action, requester: Enums.Player) -> void:
+	# Si el jugador 1 cantó, la IA debe responder
+	if requester == Enums.Player.PLAYER_1:
+		GameManagerService.ai_respond_to_action()
+	else:
+		_show_action_label(action)
+		_show_response_buttons()
+		
+
 # ============================================================================
 # PRIVATE METHODS
 # ============================================================================
@@ -119,6 +128,37 @@ func _move_card_to_played(card: Card) -> void:
 	GameManagerService.play_card(card, Enums.Player.PLAYER_1)
 	card.position_offset = Vector2.ZERO
 
+
+func _on_accept_pressed() -> void:
+	GameManagerService.respond_to_action(true, Enums.Player.PLAYER_1)
+	_hide_action_label()
+	_hide_response_buttons()
+
+func _on_reject_pressed() -> void:
+	GameManagerService.respond_to_action(false, Enums.Player.PLAYER_1)
+	_hide_action_label()
+	_hide_response_buttons()
+
+
+func _on_truco_pressed() -> void:
+	# Verificar que es el turno del jugador 1
+	if GameManagerService.current_player != Enums.Player.PLAYER_1:
+		return
+	
+	# Solicitar acción TRUCO
+	GameManagerService.request_action(Enums.Action.TRUCO, Enums.Player.PLAYER_1)
+	
+
+func _on_flor_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_envido_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_mazo_pressed() -> void:
+	pass # Replace with function body.
 
 # ============================================================================
 # DECK INITIALIZATION
@@ -218,56 +258,15 @@ func _print_cards_size() -> void:
 	print("Total cards: ", total_cards)
 
 
-func _on_accept_pressed() -> void:
-	GameManagerService.respond_to_action(true, Enums.Player.PLAYER_1)
-	_hide_action_label()
-	_hide_response_buttons()
-
-func _on_reject_pressed() -> void:
-	GameManagerService.respond_to_action(false, Enums.Player.PLAYER_1)
-	_hide_action_label()
-	_hide_response_buttons()
-
-
-func _on_truco_pressed() -> void:
-	# Verificar que es el turno del jugador 1
-	if GameManagerService.current_player != Enums.Player.PLAYER_1:
-		return
-	
-	# Solicitar acción TRUCO
-	GameManagerService.request_action(Enums.Action.TRUCO, Enums.Player.PLAYER_1)
-	
-
-func _on_action_requested(action: Enums.Action, requester: Enums.Player) -> void:
-	# Si el jugador 1 cantó, la IA debe responder
-	if requester == Enums.Player.PLAYER_1:
-		GameManagerService.ai_respond_to_action()
-	else:
-		_show_action_label(action)
-		_show_response_buttons()
-
-
-func _on_flor_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_envido_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_mazo_pressed() -> void:
-	pass # Replace with function body.
-
-
 func _show_action_label(action: Enums.Action) -> void:
 	action_label.visible = true
 	action_label_background.visible = true
-	action_label_background.modulate.a = 0.0
+	action_label_background.scale = Vector2.ZERO
 	var action_text: String = IntlService.ACTION_WORDINGS[action]
 	var t: Tween = create_tween()
 	t.set_parallel(true)
 	t.set_ease(Tween.EASE_IN_OUT)
-	t.tween_property(action_label_background, "modulate:a", 1.0, 0.8)
+	t.tween_property(action_label_background, "scale", Vector2.ONE, 0.2)
 
 	action_label.typewrite("[rainbow][wave][b]¡ %s ![/b][/wave][/rainbow]" % action_text.to_upper())
 
@@ -288,6 +287,7 @@ func _show_response_buttons() -> void:
 
 	accept_button.visible = true
 	reject_button.visible = true
+
 
 func _hide_response_buttons() -> void:
 	var t: Tween = create_tween()

@@ -47,7 +47,7 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sta5p"]
 shader = ExtResource("7_tb146")
-shader_parameter/pixelation = 0.03200000152
+shader_parameter/pixelation = 0.050000002375
 shader_parameter/opacity = 1.0
 
 [sub_resource type="Resource" id="Resource_5mrjc"]
@@ -311,6 +311,7 @@ offset_top = -106.0
 offset_bottom = 51.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(180, 78)
 color = Color(0, 0, 0, 0.47843137)
 
 [node name="Action" type="RichTextLabel" parent="CanvasLayer2/Control"]
