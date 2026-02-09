@@ -209,3 +209,10 @@ func eval_flor(cards: Array[CardData]) -> Dictionary:
 	result["suit"] = first_suit
 	
 	return result
+
+
+func evaluate_hand_strength(cards: Array[CardData]) -> int:
+	var power: int = 0
+	for card: CardData in cards:
+		power += get_card_power(card)
+	return power
