@@ -1,6 +1,7 @@
 extends Node2D
 
 
+@onready var camera: Camera2D = $Camera2D
 @onready var cards_player_1: CardHand = $CanvasLayer/Control/CardHand
 @onready var cards_player_2: CardHand = $CanvasLayer/Control/CardHand2
 @onready var play_zone: Area2D = $CanvasLayer/Control/Area2D
@@ -20,12 +21,21 @@ var deck_data: Dictionary = {}
 var _last_held_card: Card = null
 
 func _ready() -> void:
+	_initialize_camera()
 	_initialize_deck()
 	_initialize_signals()
 	_initialize_game_manager()
 	_initialize_ui()
 	_print_cards_size()
+	
 
+func _initialize_camera() -> void:
+	get_viewport().size_changed.connect(_on_viewport_size_changed)
+	_on_viewport_size_changed()
+
+	
+func _on_viewport_size_changed() -> void:
+	camera.position = get_viewport_rect().size / 2
 
 func _initialize_game_manager() -> void:
 	var slots_p1: Array[CardSlot] = [slot_1_player_1, slot_2_player_1, slot_3_player_1]
