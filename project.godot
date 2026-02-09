@@ -49,3 +49,7 @@ enabled=PackedStringArray("res://addons/pixel_ui_effects/plugin.cfg", "res://add
 [gui]
 
 common/show_focus_state_on_pointer_event=2
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true

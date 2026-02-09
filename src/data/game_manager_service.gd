@@ -364,34 +364,90 @@ func _ai_can_act() -> bool:
 ## Decide qué canto hacer al inicio del turno de la IA.
 ## Retorna Enums.Action.NONE para no cantar (y tirar carta directamente).
 ##
-## PARA MEJORAR:
-##   - Evaluar valor de envido antes de cantar (ej: cantar solo si >= 27)
-##   - Evaluar fuerza de las cartas para decidir si cantar truco
-##   - Implementar probabilidades basadas en la ronda actual
-##   - Considerar si el oponente ya cantó algo (bluffs, estrategia)
+## Estrategia:
+##   - Envido/Flor: solo si el valor de envido/flor supera un umbral mínimo.
+##   - Truco: solo si la mano restante es suficientemente fuerte.
+##     → Si el oponente ya jugó una carta muy fuerte en esta ronda, NO cantar.
+##     → En rondas avanzadas con pocas cartas, evaluar si se puede ganar.
+##   - AGGRESSIVITY modula la probabilidad de cantar (0.0 = nunca, 1.0 = siempre).
 func _decide_ai_action() -> Enums.Action:
+	# Factor aleatorio: a veces la IA simplemente no canta
 	if _should_act(AGGRESSIVITY):
 		return Enums.Action.NONE
 	
-	# Prioridad 1: Envido/Flor en ronda 1 (antes de la primera carta)
-	if _can_call_envido_flor():
-		var cards: Array[CardData] = _get_hand_data(Enums.Player.PLAYER_2)
-		
-		if GameService.eval_flor(cards)["valid"] and _is_action_valid(Enums.Action.FLOR):
-			return Enums.Action.FLOR
-		
-		if GameService.eval_envido(cards)["valid"] and _is_action_valid(Enums.Action.ENVIDO):
-			return Enums.Action.ENVIDO
+	var cards: Array[CardData] = _get_hand_data(Enums.Player.PLAYER_2)
+	if cards.is_empty():
+		return Enums.Action.NONE
 	
-	# Prioridad 2: Truco (si no se cantó antes)
+	# --- Prioridad 1: Envido/Flor en ronda 1 (antes de la primera carta) ---
+	if _can_call_envido_flor():
+		# Flor: cantar si el valor es decente (>= 25, siendo máximo ~47)
+		if _is_action_valid(Enums.Action.FLOR):
+			var flor: Dictionary = GameService.eval_flor(cards)
+			if flor["valid"]:
+				return Enums.Action.FLOR
+		
+		# Envido: cantar solo si el envido es bueno (>= 25 de ~33 máximo)
+		if _is_action_valid(Enums.Action.ENVIDO):
+			var envido: Dictionary = GameService.eval_envido(cards)
+			if envido["valid"] and envido["points"] >= randi_range(25, 28):
+				return Enums.Action.ENVIDO
+	
+	# --- Prioridad 2: Truco (si no se cantó y la mano lo justifica) ---
 	if _is_action_valid(Enums.Action.TRUCO):
-		# TODO: Agregar condición para cantar truco solo cuando convenga.
-		# Actualmente SIEMPRE canta truco si puede. Mejorar con:
-		#   var cards = _get_hand_data(Enums.Player.PLAYER_2)
-		#   var power = _evaluate_hand_strength(cards) → si es alta, cantar
-		return Enums.Action.TRUCO
+		if _should_call_truco(cards):
+			return Enums.Action.TRUCO
 	
 	return Enums.Action.NONE
+
+
+## Evalúa si conviene cantar truco con las cartas actuales de la IA.
+## Considera la fuerza de la mano y la carta del oponente si ya jugó.
+##
+## evaluate_hand_strength: menor = más fuerte (~3 perfecta, ~42 peor, ~15 fuerte)
+## get_card_power: menor = más fuerte (1 = Ancho Espada, 14 = Cuatro)
+func _should_call_truco(cards: Array[CardData]) -> bool:
+	var hand_strength: int = GameService.evaluate_hand_strength(cards)
+	
+	# Umbral de fuerza de mano para cantar truco (randomizado para variedad)
+	# Con 3 cartas: <= 15 es mano fuerte. Con 2: <= 10. Con 1: <= 5.
+	var threshold: int
+	match cards.size():
+		3: threshold = randi_range(12, 18)
+		2: threshold = randi_range(8, 13)
+		1: threshold = randi_range(4, 8)
+		_: return false
+	
+	# Si la mano es débil, no cantar
+	if hand_strength > threshold:
+		return false
+	
+	# Si el oponente ya jugó una carta en esta ronda, verificar que podamos ganarla
+	var opponent_card: Card = _round_cards[Enums.Player.PLAYER_1]
+	if opponent_card:
+		var opp_power: int = GameService.get_card_power(opponent_card.card_data as CardData)
+		
+		# Verificar si tenemos al menos una carta que le gane
+		var can_win_round: bool = false
+		for card: CardData in cards:
+			if GameService.get_card_power(card) < opp_power:
+				can_win_round = true
+				break
+		
+		# Si no podemos ganar esta ronda, no cantar truco (pérdida obvia)
+		if not can_win_round:
+			return false
+		
+		# Si el oponente jugó algo muy fuerte (top 4: Ancho Espada, Ancho Basto, 7 Espada, 7 Oro)
+		# ser más conservador: solo cantar si nuestra mejor carta le gana
+		if opp_power <= 4:
+			var our_best_power: int = 999
+			for card: CardData in cards:
+				our_best_power = mini(our_best_power, GameService.get_card_power(card))
+			if our_best_power >= opp_power:
+				return false # No le ganamos ni con la mejor → no cantar
+	
+	return true
 
 
 ## Decide si la IA acepta o rechaza un canto del oponente.
