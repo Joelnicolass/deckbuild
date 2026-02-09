@@ -37,7 +37,7 @@ extends Node
 ##   - Ningún canto se puede repetir una vez cantado (hasta reiniciar partida)
 
 const DELAY_AI: float = 1.0
-const AGGRESSIVITY: float = 0.6
+const AGGRESSIVITY: float = 0.7
 
 
 # ============================================================================
@@ -372,7 +372,8 @@ func _ai_can_act() -> bool:
 ##   - AGGRESSIVITY modula la probabilidad de cantar (0.0 = nunca, 1.0 = siempre).
 func _decide_ai_action() -> Enums.Action:
 	# Factor aleatorio: a veces la IA simplemente no canta
-	if _should_act(AGGRESSIVITY):
+	if not _should_act(AGGRESSIVITY):
+		print("No canta")
 		return Enums.Action.NONE
 	
 	var cards: Array[CardData] = _get_hand_data(Enums.Player.PLAYER_2)
@@ -390,7 +391,8 @@ func _decide_ai_action() -> Enums.Action:
 		# Envido: cantar solo si el envido es bueno (>= 25 de ~33 máximo)
 		if _is_action_valid(Enums.Action.ENVIDO):
 			var envido: Dictionary = GameService.eval_envido(cards)
-			if envido["valid"] and envido["points"] >= randi_range(25, 28):
+			if envido["valid"] and envido["points"] >= randi_range(20, 28):
+				print("Canta envido")
 				return Enums.Action.ENVIDO
 	
 	# --- Prioridad 2: Truco (si no se cantó y la mano lo justifica) ---

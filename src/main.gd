@@ -16,6 +16,21 @@ extends Node2D
 @onready var accept_button: Button = $CanvasLayer3/Control/MarginContainer2/GridContainer/Accept
 @onready var reject_button: Button = $CanvasLayer3/Control/MarginContainer2/GridContainer/Reject
 
+# ── CONFIGURACIÓN DE LAYOUT ──────────────────────────────────────────
+# Zona de juego (play zone)
+@export_group("Play Zone")
+@export var zone_center_ratio: float = 0.42 ## Centro vertical de la zona (0.0 = arriba, 1.0 = abajo)
+@export var zone_height: float = 250.0 ## Alto total de la zona en px (subir = zona más grande)
+
+# Slots (las 3 posiciones de cartas jugadas por cada jugador)
+@export_group("Slots")
+@export var slot_size: Vector2 = Vector2(40, 40) ## Tamaño de cada slot
+@export var slot_gap_h: float = 80.0 ## Espacio horizontal entre slots
+@export var slot_spacing_v: float = 60.0 ## Distancia vertical entre fila P2 y fila P1 (subir = más separados)
+
+# Manos de cartas
+@export_group("Hands")
+@export var hand_margin: float = 70.0 ## Distancia de cada mano al borde de la zona (subir = más lejos)
 
 var deck_data: Dictionary = {}
 var _last_held_card: Card = null
@@ -27,7 +42,76 @@ func _ready() -> void:
 	_initialize_game_manager()
 	_initialize_ui()
 	_print_cards_size()
-	
+
+
+func _initialize_ui() -> void:
+	action_label.visible = false
+	action_label_background.visible = false
+	accept_button.visible = false
+	reject_button.visible = false
+	_layout_ui()
+
+
+func _layout_ui() -> void:
+	var vp: Vector2 = get_viewport_rect().size
+
+	# ┌─────────────────────────────┐
+	# │      cards player 2 (IA)    │  ← hand_margin arriba de la zona
+	# │                             │
+	# │  ┌────── PLAY ZONE ──────┐  │
+	# │  │  [S1]  [S2]  [S3]  P2│  │  ← fila superior (slot_spacing_v / 2 arriba del centro)
+	# │  │                       │  │
+	# │  │  [S1]  [S2]  [S3]  P1│  │  ← fila inferior (slot_spacing_v / 2 abajo del centro)
+	# │  └───────────────────────┘  │
+	# │                             │
+	# │      cards player 1 (Vos)   │  ← hand_margin abajo de la zona
+	# │      [ Buttons ]            │
+	# └─────────────────────────────┘
+
+	# --- Zona central ---
+	var zone_cy: float = vp.y * zone_center_ratio
+	var zone_top: float = zone_cy - zone_height / 2.0
+	var zone_bot: float = zone_cy + zone_height / 2.0
+
+	# --- Slots: 2 filas centradas en la zona ---
+	var slots_p2_y: float = zone_cy - slot_spacing_v / 2.0 - slot_size.y / 2.0
+	var slots_p1_y: float = zone_cy + slot_spacing_v / 2.0 - slot_size.y / 2.0
+
+	var total_slots_w: float = slot_size.x * 3.0 + slot_gap_h * 2.0
+	var start_x: float = (vp.x - total_slots_w) / 2.0
+
+	var arr_p2: Array[CardSlot] = [slot_1_player_2, slot_2_player_2, slot_3_player_2]
+	var arr_p1: Array[CardSlot] = [slot_1_player_1, slot_2_player_1, slot_3_player_1]
+
+	for i: int in range(3):
+		var sx: float = start_x + i * (slot_size.x + slot_gap_h)
+		arr_p2[i].position = Vector2(sx, slots_p2_y)
+		arr_p2[i].size = slot_size
+		arr_p1[i].position = Vector2(sx, slots_p1_y)
+		arr_p1[i].size = slot_size
+
+	# --- Manos: misma distancia al borde de la zona ---
+	var cards_p2_y: float = zone_top - hand_margin
+	var cards_p1_y: float = zone_bot + hand_margin
+
+	cards_player_2.offset_top = cards_p2_y
+	cards_player_2.offset_bottom = cards_p2_y
+	cards_player_1.offset_top = cards_p1_y - vp.y
+	cards_player_1.offset_bottom = cards_player_1.offset_top
+
+	# --- Play zone (collision + visual) – ancho completo ---
+	var z_size: Vector2 = Vector2(vp.x, zone_height)
+
+	var collision: CollisionShape2D = play_zone.get_node("CollisionShape2D")
+	collision.position = Vector2(vp.x / 2.0, zone_cy)
+	if collision.shape is RectangleShape2D:
+		(collision.shape as RectangleShape2D).size = z_size
+
+	var play_rect: ColorRect = play_zone.get_node("PlayZoneColorRect")
+	play_rect.position = Vector2(0.0, zone_top)
+	play_rect.size = z_size
+	play_rect.scale = Vector2.ONE
+
 
 func _initialize_camera() -> void:
 	get_viewport().size_changed.connect(_on_viewport_size_changed)
@@ -36,6 +120,7 @@ func _initialize_camera() -> void:
 	
 func _on_viewport_size_changed() -> void:
 	camera.position = get_viewport_rect().size / 2
+	_layout_ui()
 
 func _initialize_game_manager() -> void:
 	var slots_p1: Array[CardSlot] = [slot_1_player_1, slot_2_player_1, slot_3_player_1]
@@ -50,13 +135,6 @@ func _initialize_signals() -> void:
 	GameManagerService.must_play_card.connect(_on_must_play_card)
 	GameManagerService.round_result.connect(_on_round_result)
 	GameManagerService.action_requested.connect(_on_action_requested)
-
-
-func _initialize_ui() -> void:
-	action_label.visible = false
-	action_label_background.visible = false
-	accept_button.visible = false
-	reject_button.visible = false
 
 
 # ============================================================================
