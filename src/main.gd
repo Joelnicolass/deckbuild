@@ -3,7 +3,6 @@ extends Node2D
 
 @onready var cards_player_1: CardHand = $CanvasLayer/Control/CardHand
 @onready var cards_player_2: CardHand = $CanvasLayer/Control/CardHand2
-@onready var available_plays: Label = $CanvasLayer2/Control/MarginContainer/Label
 @onready var play_zone: Area2D = $CanvasLayer/Control/Area2D
 @onready var slot_1_player_1: CardSlot = $CanvasLayer/Control/CardSlot1Player1
 @onready var slot_2_player_1: CardSlot = $CanvasLayer/Control/CardSlot2Player1
@@ -11,6 +10,8 @@ extends Node2D
 @onready var slot_1_player_2: CardSlot = $CanvasLayer/Control/CardSlot1Player2
 @onready var slot_2_player_2: CardSlot = $CanvasLayer/Control/CardSlot2Player2
 @onready var slot_3_player_2: CardSlot = $CanvasLayer/Control/CardSlot3Player2
+@onready var action_label: TypeWriterLabel = $CanvasLayer2/Control/Action
+@onready var action_label_background: ColorRect = $CanvasLayer2/Control/ActionBg
 @onready var accept_button: Button = $CanvasLayer3/Control/MarginContainer2/GridContainer/Accept
 @onready var reject_button: Button = $CanvasLayer3/Control/MarginContainer2/GridContainer/Reject
 
@@ -22,7 +23,7 @@ func _ready() -> void:
 	_initialize_deck()
 	_initialize_signals()
 	_initialize_game_manager()
-
+	_initialize_ui()
 	_print_cards_size()
 
 
@@ -39,6 +40,13 @@ func _initialize_signals() -> void:
 	GameManagerService.must_play_card.connect(_on_must_play_card)
 	GameManagerService.round_result.connect(_on_round_result)
 	GameManagerService.action_requested.connect(_on_action_requested)
+
+
+func _initialize_ui() -> void:
+	action_label.visible = false
+	action_label_background.visible = false
+	accept_button.visible = false
+	reject_button.visible = false
 
 
 # ============================================================================
@@ -212,9 +220,13 @@ func _print_cards_size() -> void:
 
 func _on_accept_pressed() -> void:
 	GameManagerService.respond_to_action(true, Enums.Player.PLAYER_1)
+	_hide_action_label()
+	_hide_response_buttons()
 
 func _on_reject_pressed() -> void:
 	GameManagerService.respond_to_action(false, Enums.Player.PLAYER_1)
+	_hide_action_label()
+	_hide_response_buttons()
 
 
 func _on_truco_pressed() -> void:
@@ -224,9 +236,65 @@ func _on_truco_pressed() -> void:
 	
 	# Solicitar acción TRUCO
 	GameManagerService.request_action(Enums.Action.TRUCO, Enums.Player.PLAYER_1)
+	
 
-
-func _on_action_requested(_action: Enums.Action, requester: Enums.Player) -> void:
+func _on_action_requested(action: Enums.Action, requester: Enums.Player) -> void:
 	# Si el jugador 1 cantó, la IA debe responder
 	if requester == Enums.Player.PLAYER_1:
 		GameManagerService.ai_respond_to_action()
+	else:
+		_show_action_label(action)
+		_show_response_buttons()
+
+
+func _on_flor_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_envido_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_mazo_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _show_action_label(action: Enums.Action) -> void:
+	action_label.visible = true
+	action_label_background.visible = true
+	action_label_background.modulate.a = 0.0
+	var action_text: String = IntlService.ACTION_WORDINGS[action]
+	var t: Tween = create_tween()
+	t.set_parallel(true)
+	t.set_ease(Tween.EASE_IN_OUT)
+	t.tween_property(action_label_background, "modulate:a", 1.0, 0.8)
+
+	action_label.typewrite("[rainbow][wave][b]¡ %s ![/b][/wave][/rainbow]" % action_text.to_upper())
+
+
+func _hide_action_label() -> void:
+	action_label.visible = false
+	action_label_background.visible = false
+
+
+func _show_response_buttons() -> void:
+	var t: Tween = create_tween()
+	accept_button.modulate.a = 0.0
+	reject_button.modulate.a = 0.0
+	t.set_parallel(true)
+	t.set_ease(Tween.EASE_IN_OUT)
+	t.tween_property(accept_button, "modulate:a", 1.0, 0.4)
+	t.tween_property(reject_button, "modulate:a", 1.0, 0.4)
+
+	accept_button.visible = true
+	reject_button.visible = true
+
+func _hide_response_buttons() -> void:
+	var t: Tween = create_tween()
+	t.set_parallel(true)
+	t.set_ease(Tween.EASE_IN_OUT)
+	t.tween_property(accept_button, "modulate:a", 0.0, 0.4)
+	t.tween_property(reject_button, "modulate:a", 0.0, 0.4)
+
+	accept_button.visible = false
+	reject_button.visible = false

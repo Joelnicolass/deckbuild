@@ -44,7 +44,7 @@ window/handheld/orientation=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/pixel_ui_effects/plugin.cfg", "res://addons/simple_cards/plugin.cfg")
+enabled=PackedStringArray("res://addons/pixel_ui_effects/plugin.cfg", "res://addons/simple_cards/plugin.cfg", "res://addons/type_writer_label/plugin.cfg")
 
 [gui]
 

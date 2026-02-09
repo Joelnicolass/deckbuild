@@ -37,7 +37,7 @@ extends Node
 ##   - Ningún canto se puede repetir una vez cantado (hasta reiniciar partida)
 
 const DELAY_AI: float = 1.0
-const AGGRESSIVITY: float = 0.5
+const AGGRESSIVITY: float = 0.6
 
 
 # ============================================================================
@@ -370,6 +370,9 @@ func _ai_can_act() -> bool:
 ##   - Implementar probabilidades basadas en la ronda actual
 ##   - Considerar si el oponente ya cantó algo (bluffs, estrategia)
 func _decide_ai_action() -> Enums.Action:
+	if _should_act(AGGRESSIVITY):
+		return Enums.Action.NONE
+	
 	# Prioridad 1: Envido/Flor en ronda 1 (antes de la primera carta)
 	if _can_call_envido_flor():
 		var cards: Array[CardData] = _get_hand_data(Enums.Player.PLAYER_2)

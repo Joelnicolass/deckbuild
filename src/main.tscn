@@ -1,14 +1,18 @@
-[gd_scene load_steps=30 format=3 uid="uid://lvu26w7cu1pg"]
+[gd_scene load_steps=35 format=3 uid="uid://lvu26w7cu1pg"]
 
 [ext_resource type="Script" uid="uid://q480wihmrpi5" path="res://src/main.gd" id="1_eewff"]
 [ext_resource type="Shader" uid="uid://ixvefdt6ek0a" path="res://src/common/shaders/bg_distortion.gdshader" id="2_3cfgd"]
 [ext_resource type="Script" uid="uid://bbi8i6vef3f6y" path="res://addons/simple_cards/hand/card_hand.gd" id="2_5q4o7"]
 [ext_resource type="Shader" uid="uid://cvpt721gdpgr6" path="res://src/common/shaders/vignette.gdshader" id="3_3cfgd"]
+[ext_resource type="FontFile" uid="uid://df16u3knfbs4m" path="res://addons/pixel_ui_effects/fonts/NJ-OnePixelOff.ttf" id="5_kf8lf"]
 [ext_resource type="FontFile" uid="uid://c1eny26u6woqv" path="res://addons/pixel_ui_effects/fonts/NJ-PixelSmooth.ttf" id="5_mgm53"]
 [ext_resource type="Script" uid="uid://b1s6x4iyt2pps" path="res://addons/simple_cards/hand/shape/premade_shapes/line_shape.gd" id="5_uewes"]
 [ext_resource type="Script" uid="uid://btwakv2103085" path="res://addons/simple_cards/slot/card_slot.gd" id="6_kqbth"]
 [ext_resource type="Script" uid="uid://crxiqf3hfp6wp" path="res://addons/pixel_art_shaders/effect_resources/effect_setting.gd" id="7_mlv6i"]
+[ext_resource type="Script" uid="uid://bigcfyacvshrd" path="res://addons/type_writer_label/classes/type_writer_label.gd" id="7_srxbw"]
+[ext_resource type="Shader" uid="uid://cresj0fky8mun" path="res://src/common/shaders/ps1.gdshader" id="7_tb146"]
 [ext_resource type="Script" uid="uid://dq6fcmtprlfll" path="res://addons/pixel_ui_effects/pixel_rich_text_effect.gd" id="8_kf8lf"]
+[ext_resource type="FontFile" uid="uid://cxnmxmbbmqq6i" path="res://addons/pixel_ui_effects/fonts/NJ-PixelLessSmooth.ttf" id="9_e7lu8"]
 [ext_resource type="Script" uid="uid://cpxv4si0yrc8y" path="res://addons/pixel_ui_effects/pixel_effects_label.gd" id="9_mgm53"]
 [ext_resource type="Script" uid="uid://dg56puyihu772" path="res://addons/pixel_art_shaders/effect_resources/classes/iterative_fire.gd" id="10_mgm53"]
 [ext_resource type="Script" uid="uid://cwn58mt8g2pkl" path="res://addons/pixel_art_shaders/effect_resources/classes/afterimage.gd" id="10_okx7f"]
@@ -40,6 +44,11 @@ size = Vector2(451, 214)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_srxbw"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sta5p"]
+shader = ExtResource("7_tb146")
+shader_parameter/pixelation = 0.03200000152
+shader_parameter/opacity = 1.0
 
 [sub_resource type="Resource" id="Resource_5mrjc"]
 script = ExtResource("10_mgm53")
@@ -291,19 +300,46 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/Control"]
-layout_mode = 0
-offset_right = 126.0
-offset_bottom = 40.0
-scale = Vector2(1, 1.0042542)
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+[node name="ActionBg" type="ColorRect" parent="CanvasLayer2/Control"]
+material = SubResource("ShaderMaterial_sta5p")
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -106.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.47843137)
 
-[node name="Label" type="Label" parent="CanvasLayer2/Control/MarginContainer"]
-layout_mode = 2
-text = "asdasasdasdasd"
+[node name="Action" type="RichTextLabel" parent="CanvasLayer2/Control"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -101.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(180, 47)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 5
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/outline_size = 1
+theme_override_fonts/normal_font = ExtResource("9_e7lu8")
+theme_override_fonts/bold_font = ExtResource("5_kf8lf")
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/bold_font_size = 40
+bbcode_enabled = true
+text = "[b][rainbow][wave]¡TRUCO![/wave]"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("7_srxbw")
+wait_before_start = 0.1
+metadata/_custom_type_script = "uid://bigcfyacvshrd"
 
 [node name="CanvasLayer3" type="CanvasLayer" parent="."]
 
@@ -335,12 +371,12 @@ layout_mode = 2
 theme_override_constants/h_separation = 10
 columns = 4
 
-[node name="Button" type="Button" parent="CanvasLayer3/Control/MarginContainer/GridContainer"]
+[node name="Flor" type="Button" parent="CanvasLayer3/Control/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer/GridContainer/Button"]
+[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer/GridContainer/Flor"]
 z_index = 1
 texture_filter = 1
 layout_mode = 0
@@ -361,12 +397,12 @@ script = ExtResource("9_mgm53")
 effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_uewes")])
 metadata/_custom_type_script = "uid://cpxv4si0yrc8y"
 
-[node name="Button2" type="Button" parent="CanvasLayer3/Control/MarginContainer/GridContainer"]
+[node name="Envido" type="Button" parent="CanvasLayer3/Control/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer/GridContainer/Button2"]
+[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer/GridContainer/Envido"]
 z_index = 1
 texture_filter = 1
 layout_mode = 0
@@ -413,12 +449,12 @@ script = ExtResource("9_mgm53")
 effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_mlv6i")])
 metadata/_custom_type_script = "uid://cpxv4si0yrc8y"
 
-[node name="Button4" type="Button" parent="CanvasLayer3/Control/MarginContainer/GridContainer"]
+[node name="Mazo" type="Button" parent="CanvasLayer3/Control/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer/GridContainer/Button4"]
+[node name="PixelEffectRichTextLabel" type="RichTextLabel" parent="CanvasLayer3/Control/MarginContainer/GridContainer/Mazo"]
 z_index = 1
 texture_filter = 1
 layout_mode = 0
@@ -449,6 +485,7 @@ offset_top = -127.0
 offset_bottom = -61.0
 grow_horizontal = 2
 grow_vertical = 0
+pivot_offset = Vector2(180, 33)
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -511,6 +548,9 @@ script = ExtResource("9_mgm53")
 effect_definitions = Array[ExtResource("7_mlv6i")]([SubResource("Resource_kf8lf"), SubResource("Resource_srxbw")])
 metadata/_custom_type_script = "uid://cpxv4si0yrc8y"
 
+[connection signal="pressed" from="CanvasLayer3/Control/MarginContainer/GridContainer/Flor" to="." method="_on_flor_pressed"]
+[connection signal="pressed" from="CanvasLayer3/Control/MarginContainer/GridContainer/Envido" to="." method="_on_envido_pressed"]
 [connection signal="pressed" from="CanvasLayer3/Control/MarginContainer/GridContainer/Truco" to="." method="_on_truco_pressed"]
+[connection signal="pressed" from="CanvasLayer3/Control/MarginContainer/GridContainer/Mazo" to="." method="_on_mazo_pressed"]
 [connection signal="pressed" from="CanvasLayer3/Control/MarginContainer2/GridContainer/Accept" to="." method="_on_accept_pressed"]
 [connection signal="pressed" from="CanvasLayer3/Control/MarginContainer2/GridContainer/Reject" to="." method="_on_reject_pressed"]
